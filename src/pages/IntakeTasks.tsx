@@ -121,7 +121,7 @@ export const IntakeTasks = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">Intake Tasks</h1>
+        <h1 className="text-3xl font-bold text-foreground">Intake Tasks</h1>
         <div className="flex items-center gap-4 text-sm text-gray-600">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-red-500 rounded-full"></div>
