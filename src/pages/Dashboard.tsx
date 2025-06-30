@@ -217,7 +217,8 @@ export const Dashboard = () => {
           return (
             <Card
               key={metric.title}
-              className="glass-card hover:glass-elevated transition-all duration-300 slide-up"
+              className="glass-card hover:glass-elevated transition-all duration-300 slide-up cursor-pointer"
+              onClick={metric.onClick}
             >
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
@@ -233,19 +234,19 @@ export const Dashboard = () => {
                 <div className="text-3xl font-bold text-foreground mb-2">
                   {metric.value}
                 </div>
-                <p className="text-xs text-muted-foreground mb-2">
-                  <span
-                    className={
-                      metric.change.startsWith("+")
-                        ? "text-green-400"
-                        : "text-red-400"
-                    }
-                  >
-                    {metric.change}
-                  </span>{" "}
-                  from yesterday
+                <p className="text-xs text-muted-foreground mb-3">
+                  {metric.message}
                 </p>
-                <p className="text-xs text-blue-300 italic">{metric.message}</p>
+                <Button
+                  size="sm"
+                  className="w-full hover:scale-105 active:scale-95 transition-transform duration-150"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    metric.onClick();
+                  }}
+                >
+                  {metric.action}
+                </Button>
               </CardContent>
             </Card>
           );
