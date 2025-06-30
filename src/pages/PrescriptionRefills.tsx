@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useNavigate } from "react-router-dom";
 import {
   Pill,
   Search,
@@ -20,6 +21,8 @@ import {
   Clock,
   AlertTriangle,
   User,
+  Bell,
+  FileText,
 } from "lucide-react";
 
 interface Refill {
