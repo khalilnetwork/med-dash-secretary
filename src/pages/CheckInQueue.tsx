@@ -18,7 +18,7 @@ export const CheckInQueue = () => {
   const [statusFilter, setStatusFilter] = useState("all");
   const [isSearching, setIsSearching] = useState(false);
 
-  const patients = [
+  const [patients, setPatients] = useState([
     {
       id: 1,
       time: "9:00 AM",
@@ -59,7 +59,30 @@ export const CheckInQueue = () => {
       intakeComplete: false,
       avatar: "LB",
     },
-  ];
+  ]);
+
+  const updatePatientStatus = (patientId: number, newStatus: string) => {
+    setPatients((prev) =>
+      prev.map((patient) =>
+        patient.id === patientId ? { ...patient, status: newStatus } : patient,
+      ),
+    );
+  };
+
+  const markAllArrived = () => {
+    setPatients((prev) =>
+      prev.map((patient) => ({ ...patient, status: "Arrived" })),
+    );
+    setTimeout(() => alert("✅ All patients marked as arrived!"), 100);
+  };
+
+  const sendReminders = () => {
+    const pendingCount = patients.filter((p) => p.status === "Pending").length;
+    setTimeout(
+      () => alert(`📱 Reminders sent to ${pendingCount} pending patients!`),
+      100,
+    );
+  };
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
