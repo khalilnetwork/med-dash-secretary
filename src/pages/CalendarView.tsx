@@ -613,6 +613,235 @@ export const CalendarView = () => {
           </div>
         </div>
       </div>
+
+      {/* New Appointment Modal */}
+      {showNewAppointmentModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <Card className="w-[600px] max-h-[90vh] overflow-y-auto glass-elevated">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-2">
+                  <Plus className="h-5 w-5 text-primary" />
+                  Schedule New Appointment
+                </CardTitle>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setShowNewAppointmentModal(false)}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="patientName">Patient Name *</Label>
+                  <Input
+                    id="patientName"
+                    value={newAppointment.patientName}
+                    onChange={(e) =>
+                      setNewAppointment((prev) => ({
+                        ...prev,
+                        patientName: e.target.value,
+                      }))
+                    }
+                    placeholder="Enter patient full name"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="patientPhone">Phone Number</Label>
+                  <Input
+                    id="patientPhone"
+                    value={newAppointment.patientPhone}
+                    onChange={(e) =>
+                      setNewAppointment((prev) => ({
+                        ...prev,
+                        patientPhone: e.target.value,
+                      }))
+                    }
+                    placeholder="(555) 123-4567"
+                    type="tel"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="appointmentType">Appointment Type</Label>
+                  <select
+                    id="appointmentType"
+                    value={newAppointment.appointmentType}
+                    onChange={(e) =>
+                      setNewAppointment((prev) => ({
+                        ...prev,
+                        appointmentType: e.target.value,
+                      }))
+                    }
+                    className="w-full px-3 py-2 border border-input rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  >
+                    <option value="consultation">Consultation</option>
+                    <option value="checkup">Annual Checkup</option>
+                    <option value="follow-up">Follow-up</option>
+                    <option value="physical-therapy">Physical Therapy</option>
+                    <option value="surgery-consultation">
+                      Surgery Consultation
+                    </option>
+                    <option value="lab-work">Lab Work</option>
+                    <option value="vaccination">Vaccination</option>
+                    <option value="emergency">Emergency</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="room">Room Assignment</Label>
+                  <select
+                    id="room"
+                    value={newAppointment.room}
+                    onChange={(e) =>
+                      setNewAppointment((prev) => ({
+                        ...prev,
+                        room: e.target.value,
+                      }))
+                    }
+                    className="w-full px-3 py-2 border border-input rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  >
+                    <option value="Room 101">Room 101</option>
+                    <option value="Room 102">Room 102</option>
+                    <option value="Room 103">Room 103</option>
+                    <option value="Room 104">Room 104</option>
+                    <option value="Room 105">Room 105</option>
+                    <option value="Surgery Suite 1">Surgery Suite 1</option>
+                    <option value="Surgery Suite 2">Surgery Suite 2</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="date">Date</Label>
+                  <Input
+                    id="date"
+                    type="date"
+                    value={newAppointment.date}
+                    onChange={(e) =>
+                      setNewAppointment((prev) => ({
+                        ...prev,
+                        date: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="time">Time</Label>
+                  <select
+                    id="time"
+                    value={newAppointment.time}
+                    onChange={(e) =>
+                      setNewAppointment((prev) => ({
+                        ...prev,
+                        time: e.target.value,
+                      }))
+                    }
+                    className="w-full px-3 py-2 border border-input rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  >
+                    {timeSlots.map((slot) => (
+                      <option key={slot} value={slot}>
+                        {slot}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="duration">Duration (minutes)</Label>
+                  <select
+                    id="duration"
+                    value={newAppointment.duration}
+                    onChange={(e) =>
+                      setNewAppointment((prev) => ({
+                        ...prev,
+                        duration: parseInt(e.target.value),
+                      }))
+                    }
+                    className="w-full px-3 py-2 border border-input rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  >
+                    <option value={15}>15 minutes</option>
+                    <option value={30}>30 minutes</option>
+                    <option value={45}>45 minutes</option>
+                    <option value={60}>1 hour</option>
+                    <option value={90}>1.5 hours</option>
+                    <option value={120}>2 hours</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="notes">Notes (Optional)</Label>
+                <Textarea
+                  id="notes"
+                  value={newAppointment.notes}
+                  onChange={(e) =>
+                    setNewAppointment((prev) => ({
+                      ...prev,
+                      notes: e.target.value,
+                    }))
+                  }
+                  placeholder="Additional notes about the appointment..."
+                  className="min-h-20"
+                />
+              </div>
+
+              <div className="bg-muted/30 p-4 rounded-lg">
+                <h4 className="font-medium text-foreground mb-2">
+                  Appointment Summary
+                </h4>
+                <div className="space-y-1 text-sm text-muted-foreground">
+                  <p>
+                    <strong>Patient:</strong>{" "}
+                    {newAppointment.patientName || "Not specified"}
+                  </p>
+                  <p>
+                    <strong>Type:</strong> {newAppointment.appointmentType}
+                  </p>
+                  <p>
+                    <strong>Date & Time:</strong> {newAppointment.date} at{" "}
+                    {newAppointment.time}
+                  </p>
+                  <p>
+                    <strong>Duration:</strong> {newAppointment.duration} minutes
+                  </p>
+                  <p>
+                    <strong>Room:</strong> {newAppointment.room}
+                  </p>
+                  {newAppointment.patientPhone && (
+                    <p>
+                      <strong>Phone:</strong> {newAppointment.patientPhone}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <Button
+                  onClick={createAppointment}
+                  disabled={!newAppointment.patientName.trim()}
+                  className="flex-1 hover:scale-105 active:scale-95 transition-transform duration-150"
+                >
+                  <Save className="h-4 w-4 mr-2" />
+                  Schedule Appointment
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => setShowNewAppointmentModal(false)}
+                  className="hover:scale-105 active:scale-95 transition-transform duration-150"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 };
