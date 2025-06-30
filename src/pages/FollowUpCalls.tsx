@@ -254,17 +254,19 @@ export const FollowUpCalls = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card className="glass-card">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Total Calls</p>
+                <p className="text-sm text-muted-foreground">
+                  Today's Patients
+                </p>
                 <p className="text-2xl font-bold text-foreground">
                   {stats.total}
                 </p>
               </div>
-              <Phone className="h-8 w-8 text-primary" />
+              <User className="h-8 w-8 text-primary" />
             </div>
           </CardContent>
         </Card>
@@ -273,12 +275,28 @@ export const FollowUpCalls = () => {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Scheduled</p>
+                <p className="text-sm text-muted-foreground">Needs Follow-up</p>
                 <p className="text-2xl font-bold text-yellow-600">
-                  {stats.scheduled}
+                  {stats.needsFollowUp}
                 </p>
               </div>
-              <Clock className="h-8 w-8 text-yellow-600" />
+              <Calendar className="h-8 w-8 text-yellow-600" />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="glass-card">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">
+                  Revisit Scheduled
+                </p>
+                <p className="text-2xl font-bold text-blue-600">
+                  {stats.revisitScheduled}
+                </p>
+              </div>
+              <Clock className="h-8 w-8 text-blue-600" />
             </div>
           </CardContent>
         </Card>
@@ -289,38 +307,10 @@ export const FollowUpCalls = () => {
               <div>
                 <p className="text-sm text-muted-foreground">Completed</p>
                 <p className="text-2xl font-bold text-green-600">
-                  {stats.completed}
+                  {stats.discharged}
                 </p>
               </div>
               <CheckCircle className="h-8 w-8 text-green-600" />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="glass-card">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-muted-foreground">No Answer</p>
-                <p className="text-2xl font-bold text-red-600">
-                  {stats.noAnswer}
-                </p>
-              </div>
-              <XCircle className="h-8 w-8 text-red-600" />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="glass-card">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-muted-foreground">Urgent</p>
-                <p className="text-2xl font-bold text-red-600">
-                  {stats.urgent}
-                </p>
-              </div>
-              <Phone className="h-8 w-8 text-red-600" />
             </div>
           </CardContent>
         </Card>
