@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,12 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				'health-mint': 'hsl(var(--health-mint))',
+				'health-sky': 'hsl(var(--health-sky))',
+				'health-warm': 'hsl(var(--health-warm))',
+				'health-success': 'hsl(var(--health-success))',
+				'health-warning': 'hsl(var(--health-warning))'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,11 +90,43 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'pulse-gentle': {
+					'0%, 100%': {
+						opacity: '1'
+					},
+					'50%': {
+						opacity: '0.7'
+					}
+				},
+				'slide-up': {
+					from: {
+						transform: 'translateY(10px)',
+						opacity: '0'
+					},
+					to: {
+						transform: 'translateY(0)',
+						opacity: '1'
+					}
+				},
+				'fade-in': {
+					from: {
+						opacity: '0'
+					},
+					to: {
+						opacity: '1'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-gentle': 'pulse-gentle 2s ease-in-out infinite',
+				'slide-up': 'slide-up 0.3s ease-out',
+				'fade-in': 'fade-in 0.5s ease-out'
+			},
+			backdropBlur: {
+				xs: '2px',
 			}
 		}
 	},
