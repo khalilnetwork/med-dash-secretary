@@ -20,23 +20,21 @@ import {
   Clock,
 } from "lucide-react";
 
-interface LabAlert {
+interface TodayVisit {
   id: number;
   patientName: string;
-  testType: string;
-  value: string;
-  normalRange: string;
-  severity: "low" | "medium" | "high" | "critical";
-  status:
-    | "new"
-    | "reviewed"
-    | "acknowledged"
-    | "follow-up-scheduled"
-    | "resolved";
-  resultDate: string;
-  orderingPhysician: string;
-  notes?: string;
-  flagType: "high" | "low" | "abnormal" | "critical";
+  time: string;
+  diagnosis: string;
+  treatment: string;
+  medications: string[];
+  followUp: string;
+  notes: string;
+  vitals: {
+    bloodPressure: string;
+    temperature: string;
+    pulse: string;
+  };
+  status: "completed" | "in-progress" | "no-show";
 }
 
 export const LabAlerts = () => {
