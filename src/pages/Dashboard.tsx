@@ -357,30 +357,99 @@ export const Dashboard = () => {
 
         <Card className="glass-card">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-foreground">
-              <AlertTriangle className="h-5 w-5 text-orange-600" />
-              Wellness Alerts
-            </CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle className="flex items-center gap-2 text-foreground">
+                <AlertTriangle className="h-5 w-5 text-orange-600" />
+                Quick Tasks
+              </CardTitle>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => navigate("/agenda")}
+                className="hover:scale-105 active:scale-95 transition-transform duration-150"
+              >
+                View All Tasks
+              </Button>
+            </div>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              <div className="p-4 border-l-4 border-green-500 glass-subtle rounded-lg">
-                <p className="font-medium text-green-700">🎉 Great News!</p>
-                <p className="text-sm text-muted-foreground">
-                  John Doe's lab results are perfectly normal
-                </p>
+              <div className="p-4 border-l-4 border-blue-500 glass-subtle rounded-lg hover:glass-card transition-all duration-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium text-blue-700">
+                      📞 Follow-up Calls
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      5 patients need callbacks
+                    </p>
+                  </div>
+                  <Button
+                    size="sm"
+                    onClick={() => navigate("/callbacks")}
+                    className="hover:scale-105 active:scale-95 transition-transform duration-150"
+                  >
+                    Call Now
+                  </Button>
+                </div>
               </div>
-              <div className="p-4 border-l-4 border-yellow-500 glass-subtle rounded-lg">
-                <p className="font-medium text-yellow-700">💊 Refill Ready</p>
-                <p className="text-sm text-muted-foreground">
-                  Jane Smith - Metformin approved
-                </p>
+
+              <div className="p-4 border-l-4 border-green-500 glass-subtle rounded-lg hover:glass-card transition-all duration-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium text-green-700">
+                      💊 Refills Ready
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      3 prescriptions approved
+                    </p>
+                  </div>
+                  <Button
+                    size="sm"
+                    onClick={() => navigate("/refills")}
+                    className="hover:scale-105 active:scale-95 transition-transform duration-150"
+                  >
+                    Notify Patients
+                  </Button>
+                </div>
               </div>
-              <div className="p-4 border-l-4 border-blue-500 glass-subtle rounded-lg">
-                <p className="font-medium text-blue-700">📅 Schedule Update</p>
-                <p className="text-sm text-muted-foreground">
-                  Bob Johnson successfully rescheduled
-                </p>
+
+              <div className="p-4 border-l-4 border-yellow-500 glass-subtle rounded-lg hover:glass-card transition-all duration-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium text-yellow-700">
+                      📋 Forms Pending
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      7 patients need intake forms
+                    </p>
+                  </div>
+                  <Button
+                    size="sm"
+                    onClick={() => navigate("/intake")}
+                    className="hover:scale-105 active:scale-95 transition-transform duration-150"
+                  >
+                    Send Forms
+                  </Button>
+                </div>
+              </div>
+
+              <div className="p-4 border-l-4 border-red-500 glass-subtle rounded-lg hover:glass-card transition-all duration-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium text-red-700">🚨 Lab Alerts</p>
+                    <p className="text-sm text-muted-foreground">
+                      3 urgent results for doctor
+                    </p>
+                  </div>
+                  <Button
+                    size="sm"
+                    onClick={() => navigate("/lab-alerts")}
+                    className="hover:scale-105 active:scale-95 transition-transform duration-150"
+                  >
+                    Review
+                  </Button>
+                </div>
               </div>
             </div>
           </CardContent>
