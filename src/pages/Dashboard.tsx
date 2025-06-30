@@ -180,32 +180,33 @@ export const Dashboard = () => {
             Good morning! Ready to help patients today? 🌟
           </h1>
           <p className="text-muted-foreground mt-1">
-            Your wellness dashboard - keeping care connected
+            Secretary Dashboard • Last updated:{" "}
+            {lastUpdate.toLocaleTimeString()}
           </p>
         </div>
         <div className="flex gap-3">
           <Button
             className="glass-card hover:neon-glow transition-all duration-300 text-white"
-            onClick={() => alert("New Appointment feature coming soon!")}
+            onClick={scheduleAppointment}
           >
             <Plus className="h-4 w-4 mr-2" />
-            New Appointment
+            Book Appointment
           </Button>
           <Button
             variant="outline"
             className="glass-subtle hover:glass-card transition-all duration-300"
-            onClick={() => alert("Send Intake Form feature coming soon!")}
+            onClick={sendIntakeForm}
           >
             <MessageSquare className="h-4 w-4 mr-2" />
-            📄 Send Intake Form
+            Send Form
           </Button>
           <Button
             variant="outline"
             className="glass-subtle hover:glass-card transition-all duration-300"
-            onClick={() => alert("Batch Reminders feature coming soon!")}
+            onClick={sendReminders}
           >
             <Bell className="h-4 w-4 mr-2" />
-            🔔 Batch Reminders
+            Send Reminders
           </Button>
         </div>
       </div>
