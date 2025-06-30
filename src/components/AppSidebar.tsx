@@ -121,46 +121,70 @@ export const AppSidebar = () => {
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   {item.subItems ? (
-                    <Collapsible defaultOpen={isGroupActive(item)}>
+                    <Collapsible
+                      open={isSectionOpen(item.title)}
+                      onOpenChange={() => toggleSection(item.title)}
+                    >
                       <CollapsibleTrigger asChild>
-                        <SidebarMenuButton className="w-full justify-between">
+                        <SidebarMenuButton className="w-full justify-between hover:bg-sidebar-accent/70 transition-all duration-200">
                           <div className="flex items-center">
-                            <item.icon className="h-5 w-5" />
+                            <item.icon className="h-5 w-5 transition-transform duration-200" />
                             {!isCollapsed && (
-                              <span className="ml-2">{item.title}</span>
+                              <span className="ml-2 transition-opacity duration-200">
+                                {item.title}
+                              </span>
                             )}
                           </div>
                           {!isCollapsed && (
-                            <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
+                            <ChevronDown
+                              className={`h-4 w-4 transition-transform duration-300 ${
+                                isSectionOpen(item.title) ? "rotate-180" : ""
+                              }`}
+                            />
                           )}
                         </SidebarMenuButton>
                       </CollapsibleTrigger>
                       {!isCollapsed && (
-                        <CollapsibleContent>
+                        <CollapsibleContent className="transition-all duration-300 data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
                           <SidebarMenuSub>
-                            {item.subItems.map((subItem: any) => (
-                              <SidebarMenuSubItem key={subItem.title}>
-                                <SidebarMenuSubButton asChild>
-                                  <NavLink
-                                    to={subItem.url}
-                                    end
-                                    className={getNavClassName}
-                                  >
-                                    <subItem.icon className="h-4 w-4" />
-                                    <span>{subItem.title}</span>
-                                  </NavLink>
-                                </SidebarMenuSubButton>
-                              </SidebarMenuSubItem>
-                            ))}
+                            {item.subItems.map(
+                              (subItem: any, index: number) => (
+                                <SidebarMenuSubItem key={subItem.title}>
+                                  <SidebarMenuSubButton asChild>
+                                    <NavLink
+                                      to={subItem.url}
+                                      end
+                                      className={`${getNavClassName} transition-all duration-200 hover:translate-x-1`}
+                                      style={{
+                                        animationDelay: `${index * 50}ms`,
+                                      }}
+                                    >
+                                      <subItem.icon className="h-4 w-4 transition-all duration-200" />
+                                      <span className="transition-all duration-200">
+                                        {subItem.title}
+                                      </span>
+                                    </NavLink>
+                                  </SidebarMenuSubButton>
+                                </SidebarMenuSubItem>
+                              ),
+                            )}
                           </SidebarMenuSub>
                         </CollapsibleContent>
                       )}
                     </Collapsible>
                   ) : (
                     <SidebarMenuButton asChild>
-                      <NavLink to={item.url} end className={getNavClassName}>
-                        <item.icon className="h-5 w-5" />
-                        {!isCollapsed && <span>{item.title}</span>}
+                      <NavLink
+                        to={item.url}
+                        end
+                        className={`${getNavClassName} transition-all duration-200 hover:translate-x-1`}
+                      >
+                        <item.icon className="h-5 w-5 transition-transform duration-200" />
+                        {!isCollapsed && (
+                          <span className="transition-opacity duration-200">
+                            {item.title}
+                          </span>
+                        )}
                       </NavLink>
                     </SidebarMenuButton>
                   )}
