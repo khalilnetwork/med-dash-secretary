@@ -256,13 +256,23 @@ export const Dashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card className="lg:col-span-2 glass-card">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-foreground">
-              <Users className="h-5 w-5 text-blue-600" />
-              Live Check-In Queue
-              <Badge className="bg-green-100 text-green-700 border-green-300 pulse-gentle">
-                Live Updates
-              </Badge>
-            </CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle className="flex items-center gap-2 text-foreground">
+                <Users className="h-5 w-5 text-blue-600" />
+                Today's Patients ({checkInQueue.length})
+                <Badge className="bg-green-100 text-green-700 border-green-300 pulse-gentle">
+                  Live
+                </Badge>
+              </CardTitle>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => navigate("/check-in")}
+                className="hover:scale-105 active:scale-95 transition-transform duration-150"
+              >
+                Manage Queue
+              </Button>
+            </div>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -281,7 +291,7 @@ export const Dashboard = () => {
                       </p>
                       <p className="text-sm text-muted-foreground flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
-                        {patient.time}
+                        {patient.time} appointment
                       </p>
                     </div>
                   </div>
@@ -290,25 +300,53 @@ export const Dashboard = () => {
                       {patient.status}
                     </Badge>
                     <div className="flex gap-2">
-                      <button
-                        className="quick-action-btn hover:scale-105 active:scale-95 transition-transform duration-150"
-                        onClick={() => completeAppointment(patient.id)}
-                      >
-                        ✅ Complete
-                      </button>
-                      <button
-                        className="quick-action-btn hover:scale-105 active:scale-95 transition-transform duration-150"
+                      {patient.status === "Pending" && (
+                        <Button
+                          size="sm"
+                          onClick={() => {
+                            updatePatientStatus(patient.id, "Arrived");
+                            setTimeout(
+                              () => alert(`✅ ${patient.name} checked in!`),
+                              100,
+                            );
+                          }}
+                          className="hover:scale-105 active:scale-95 transition-transform duration-150"
+                        >
+                          Check In
+                        </Button>
+                      )}
+                      {patient.status === "Arrived" && (
+                        <Button
+                          size="sm"
+                          onClick={() => {
+                            updatePatientStatus(patient.id, "Roomed");
+                            setTimeout(
+                              () => alert(`🏥 ${patient.name} moved to room!`),
+                              100,
+                            );
+                          }}
+                          className="hover:scale-105 active:scale-95 transition-transform duration-150"
+                        >
+                          To Room
+                        </Button>
+                      )}
+                      <Button
+                        size="sm"
+                        variant="outline"
                         onClick={() => {
-                          updatePatientStatus(patient.id, "Called");
                           setTimeout(
                             () =>
-                              alert(`📞 Calling ${patient.name}... Connected!`),
-                            300,
+                              alert(
+                                `📞 Calling ${patient.name}... \n\n"Hi ${patient.name}, this is the clinic. Your appointment is at ${patient.time} today. See you soon!"`,
+                              ),
+                            100,
                           );
                         }}
+                        className="hover:scale-105 active:scale-95 transition-transform duration-150"
                       >
-                        📞 Call
-                      </button>
+                        <Phone className="h-3 w-3 mr-1" />
+                        Call
+                      </Button>
                     </div>
                   </div>
                 </div>
