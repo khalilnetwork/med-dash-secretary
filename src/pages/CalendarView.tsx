@@ -52,7 +52,7 @@ export const CalendarView = () => {
     notes: "",
   });
 
-  const appointments: Appointment[] = [
+  const [appointments, setAppointments] = useState<Appointment[]>([
     {
       id: 1,
       time: "09:00",
@@ -98,7 +98,7 @@ export const CalendarView = () => {
       status: "confirmed",
       room: "Room 104",
     },
-  ];
+  ]);
 
   const timeSlots = Array.from({ length: 12 }, (_, i) => {
     const hour = i + 8; // Starting from 8 AM
