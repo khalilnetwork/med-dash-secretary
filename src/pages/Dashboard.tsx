@@ -229,8 +229,20 @@ export const Dashboard = () => {
                       {patient.status}
                     </Badge>
                     <div className="flex gap-2">
-                      <button className="quick-action-btn">✅ Complete</button>
-                      <button className="quick-action-btn">📞 Call</button>
+                      <button
+                        className="quick-action-btn"
+                        onClick={() =>
+                          alert(`Completing appointment for ${patient.name}`)
+                        }
+                      >
+                        ✅ Complete
+                      </button>
+                      <button
+                        className="quick-action-btn"
+                        onClick={() => alert(`Calling ${patient.name}...`)}
+                      >
+                        📞 Call
+                      </button>
                     </div>
                   </div>
                 </div>
