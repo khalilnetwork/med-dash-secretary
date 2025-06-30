@@ -16,6 +16,7 @@ import { Search, Filter, UserCheck, Send, CheckCircle } from "lucide-react";
 export const CheckInQueue = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [isSearching, setIsSearching] = useState(false);
 
   const patients = [
     {
