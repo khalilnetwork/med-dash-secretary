@@ -322,171 +322,120 @@ export const PrescriptionRefills = () => {
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2">
               <Pill className="h-5 w-5 text-primary" />
-              Refill Requests
+              Today's Patients - Medication Reminders
             </CardTitle>
-            <div className="flex items-center gap-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input
-                  placeholder="Search patients or medications..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 w-64"
-                />
-              </div>
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-3 py-2 border border-input rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-              >
-                <option value="all">All Status</option>
-                <option value="pending">Pending</option>
-                <option value="approved">Approved</option>
-                <option value="processing">Processing</option>
-                <option value="ready">Ready</option>
-                <option value="denied">Denied</option>
-              </select>
-              <select
-                value={urgencyFilter}
-                onChange={(e) => setUrgencyFilter(e.target.value)}
-                className="px-3 py-2 border border-input rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-              >
-                <option value="all">All Urgency</option>
-                <option value="urgent">Urgent</option>
-                <option value="high">High</option>
-                <option value="medium">Medium</option>
-                <option value="low">Low</option>
-              </select>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+              <Input
+                placeholder="Search patients..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 w-64"
+              />
             </div>
           </div>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Patient</TableHead>
-                <TableHead>Medication</TableHead>
-                <TableHead>Details</TableHead>
-                <TableHead>Request Date</TableHead>
-                <TableHead>Urgency</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredRefills.map((refill) => (
-                <TableRow
-                  key={refill.id}
-                  className="hover:bg-muted/30 transition-colors duration-200"
-                >
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-medium">
-                        {refill.patientName
-                          .split(" ")
-                          .map((n) => n[0])
-                          .join("")}
-                      </div>
-                      <div>
-                        <p className="font-medium">{refill.patientName}</p>
-                        <p className="text-sm text-muted-foreground">
-                          Dr. {refill.prescriber}
-                        </p>
-                      </div>
+          <div className="space-y-4">
+            {filteredPatients.map((patient) => (
+              <div
+                key={patient.id}
+                className={`p-4 rounded-lg border transition-all duration-200 ${
+                  patient.reminderEnabled
+                    ? "border-green-300 bg-green-50/50"
+                    : "border-border bg-card hover:bg-muted/30"
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-green-400 rounded-full flex items-center justify-center text-white font-medium">
+                      {patient.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")}
                     </div>
-                  </TableCell>
-                  <TableCell>
                     <div>
-                      <p className="font-medium">{refill.medication}</p>
+                      <h4 className="font-medium text-foreground">
+                        {patient.name}
+                      </h4>
                       <p className="text-sm text-muted-foreground">
-                        {refill.dosage}
+                        Visit: {patient.visitTime}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Phone: {patient.phone || "No phone number"}
                       </p>
                     </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="text-sm">
-                      <p>Qty: {refill.quantity}</p>
-                      <p className="text-muted-foreground">
-                        Refills left: {refill.refillsRemaining}
-                      </p>
-                      <p className="text-muted-foreground">
-                        Last filled: {refill.lastFilled}
-                      </p>
+                    <div className="ml-6">
+                      {patient.medications.length > 0 ? (
+                        <div>
+                          <p className="text-sm font-medium text-foreground mb-1">
+                            Medications:
+                          </p>
+                          {patient.medications.map((med, index) => (
+                            <p
+                              key={index}
+                              className="text-sm text-muted-foreground"
+                            >
+                              • {med.name} {med.dosage} - {med.frequency}
+                            </p>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-sm text-muted-foreground italic">
+                          No medications prescribed
+                        </p>
+                      )}
                     </div>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm">{refill.requestDate}</span>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <div
-                        className={`w-3 h-3 rounded-full ${getUrgencyColor(refill.urgency)}`}
-                      ></div>
-                      <span className="text-sm capitalize">
-                        {refill.urgency}
-                      </span>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      {getStatusIcon(refill.status)}
-                      <Badge className={getStatusColor(refill.status)}>
-                        {refill.status}
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    {patient.medications.length > 0 && patient.phone ? (
+                      <>
+                        {!patient.reminderEnabled ? (
+                          <Button
+                            onClick={() => setupReminder(patient)}
+                            className="hover:scale-105 active:scale-95 transition-transform duration-150"
+                          >
+                            <Bell className="h-4 w-4 mr-2" />
+                            Enable Reminder
+                          </Button>
+                        ) : (
+                          <>
+                            <Badge className="bg-green-100 text-green-800 mr-2">
+                              Reminder Active ({patient.reminderTime})
+                            </Badge>
+                            <Button
+                              variant="outline"
+                              onClick={() => disableReminder(patient.id)}
+                              className="hover:scale-105 active:scale-95 transition-transform duration-150"
+                            >
+                              Disable
+                            </Button>
+                            <Button
+                              variant="outline"
+                              onClick={() => setupReminder(patient)}
+                              className="hover:scale-105 active:scale-95 transition-transform duration-150"
+                            >
+                              Settings
+                            </Button>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      <Badge
+                        variant="outline"
+                        className="text-muted-foreground"
+                      >
+                        {patient.medications.length === 0
+                          ? "No medications"
+                          : "No phone number"}
                       </Badge>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-1">
-                      {refill.status === "pending" && (
-                        <>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() =>
-                              updateRefillStatus(refill.id, "approved")
-                            }
-                            className="hover:scale-105 active:scale-95 transition-transform duration-150"
-                          >
-                            Approve
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() =>
-                              updateRefillStatus(refill.id, "denied")
-                            }
-                            className="hover:scale-105 active:scale-95 transition-transform duration-150"
-                          >
-                            Deny
-                          </Button>
-                        </>
-                      )}
-                      {refill.status === "approved" && (
-                        <Button
-                          size="sm"
-                          onClick={() =>
-                            updateRefillStatus(refill.id, "processing")
-                          }
-                          className="hover:scale-105 active:scale-95 transition-transform duration-150"
-                        >
-                          Process
-                        </Button>
-                      )}
-                      {refill.status === "processing" && (
-                        <Button
-                          size="sm"
-                          onClick={() => updateRefillStatus(refill.id, "ready")}
-                          className="hover:scale-105 active:scale-95 transition-transform duration-150"
-                        >
-                          Mark Ready
-                        </Button>
-                      )}
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </CardContent>
       </Card>
     </div>
