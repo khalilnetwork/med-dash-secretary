@@ -229,19 +229,28 @@ export const FollowUpCalls = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-foreground">
-            Follow-Up Calls
+            Follow-Up Visits
           </h1>
           <p className="text-muted-foreground mt-1">
-            Manage patient follow-up communications
+            Manage post-visit follow-up for today's patients
           </p>
         </div>
         <div className="flex gap-2">
           <Button
-            onClick={callAllScheduled}
+            variant="outline"
+            onClick={() => navigate("/appointments")}
             className="hover:scale-105 active:scale-95 transition-transform duration-150"
           >
-            <PhoneCall className="h-4 w-4 mr-2" />
-            Start Call Queue
+            <Calendar className="h-4 w-4 mr-2" />
+            Schedule Appointment
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => navigate("/medical-history")}
+            className="hover:scale-105 active:scale-95 transition-transform duration-150"
+          >
+            <FileText className="h-4 w-4 mr-2" />
+            Patient History
           </Button>
         </div>
       </div>
