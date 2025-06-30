@@ -81,6 +81,7 @@ export const AppSidebar = () => {
   const { state } = useSidebar();
   const location = useLocation();
   const isCollapsed = state === "collapsed";
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
 
   const getNavClassName = ({ isActive }: { isActive: boolean }) =>
     isActive
