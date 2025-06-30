@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Clock, User, FileText } from "lucide-react";
 
 export const IntakeTasks = () => {
+  const [draggedItem, setDraggedItem] = useState<any>(null);
   const [tasks, setTasks] = useState({
     "not-started": [
       {
