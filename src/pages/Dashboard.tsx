@@ -117,7 +117,7 @@ export const Dashboard = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             Good morning! Ready to help patients today? 🌟
           </h1>
           <p className="text-muted-foreground mt-1">
