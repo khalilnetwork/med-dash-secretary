@@ -119,13 +119,17 @@ export const CheckInQueue = () => {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold text-foreground">Check-In Queue</h1>
         <div className="flex gap-2">
-          <Button onClick={() => alert("All patients marked as arrived!")}>
+          <Button
+            onClick={markAllArrived}
+            className="hover:scale-105 active:scale-95 transition-transform duration-150"
+          >
             <UserCheck className="h-4 w-4 mr-2" />
             Mark All Arrived
           </Button>
           <Button
             variant="outline"
-            onClick={() => alert("Reminders sent to all patients!")}
+            onClick={sendReminders}
+            className="hover:scale-105 active:scale-95 transition-transform duration-150"
           >
             <Send className="h-4 w-4 mr-2" />
             Send Reminders
