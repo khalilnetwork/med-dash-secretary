@@ -246,19 +246,28 @@ export const PrescriptionRefills = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-foreground">
-            Prescription Refills
+            Medication Reminders
           </h1>
           <p className="text-muted-foreground mt-1">
-            Manage medication refill requests
+            Manage medication reminders for today's patients
           </p>
         </div>
         <div className="flex gap-2">
           <Button
-            onClick={approveAll}
+            variant="outline"
+            onClick={() => navigate("/patient-records")}
             className="hover:scale-105 active:scale-95 transition-transform duration-150"
           >
-            <CheckCircle className="h-4 w-4 mr-2" />
-            Approve All Pending
+            <User className="h-4 w-4 mr-2" />
+            Patient Records
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => navigate("/medical-history")}
+            className="hover:scale-105 active:scale-95 transition-transform duration-150"
+          >
+            <FileText className="h-4 w-4 mr-2" />
+            Medical History
           </Button>
         </div>
       </div>
