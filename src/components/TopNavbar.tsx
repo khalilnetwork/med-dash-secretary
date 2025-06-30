@@ -1,22 +1,21 @@
-
-import React from 'react';
-import { Search, Bell, User } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { SidebarTrigger } from '@/components/ui/sidebar';
+import React from "react";
+import { Search, Bell, User } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 
 export const TopNavbar = () => {
   return (
-    <header className="h-16 bg-white border-b border-gray-200 flex items-center px-4 shadow-sm">
+    <header className="h-16 bg-card border-b border-border flex items-center px-4 shadow-sm">
       <div className="flex items-center gap-4 flex-1">
         <SidebarTrigger />
-        
+
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-sm">MC</span>
@@ -45,7 +44,7 @@ export const TopNavbar = () => {
             3
           </span>
         </Button>
-        
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon">
