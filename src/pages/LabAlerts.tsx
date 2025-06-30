@@ -3,23 +3,21 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useNavigate } from "react-router-dom";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  AlertTriangle,
-  Search,
-  CheckCircle,
-  XCircle,
-  Clock,
   FileText,
-  User,
+  Calendar,
+  Users,
+  TrendingUp,
+  Download,
+  Printer,
+  Mail,
+  BarChart3,
   Activity,
+  Heart,
+  Pill,
+  Clock,
 } from "lucide-react";
 
 interface LabAlert {
