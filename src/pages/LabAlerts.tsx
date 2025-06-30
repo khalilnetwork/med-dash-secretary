@@ -38,11 +38,16 @@ interface TodayVisit {
 }
 
 export const LabAlerts = () => {
+  const navigate = useNavigate();
+  const [selectedDate, setSelectedDate] = useState(
+    new Date().toISOString().split("T")[0],
+  );
+  const [reportType, setReportType] = useState<
+    "summary" | "detailed" | "statistics"
+  >("summary");
   const [searchTerm, setSearchTerm] = useState("");
-  const [severityFilter, setSeverityFilter] = useState("all");
-  const [statusFilter, setStatusFilter] = useState("all");
-  const [selectedAlert, setSelectedAlert] = useState<LabAlert | null>(null);
-  const [showDetailModal, setShowDetailModal] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportNotes, setReportNotes] = useState("");
 
   const [alerts, setAlerts] = useState<LabAlert[]>([
     {
