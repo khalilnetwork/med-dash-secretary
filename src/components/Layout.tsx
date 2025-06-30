@@ -8,7 +8,7 @@ import { TopNavbar } from '@/components/TopNavbar';
 export const Layout = () => {
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <div className="min-h-screen flex w-full bg-gradient-to-br from-blue-50 via-green-50 to-sky-50">
         <AppSidebar />
         <div className="flex-1 flex flex-col">
           <TopNavbar />

@@ -12,8 +12,8 @@ export const Dashboard = () => {
       value: "28",
       change: "+12%",
       icon: Calendar,
-      color: "text-blue-400",
-      bgColor: "bg-blue-500/20",
+      color: "text-blue-600",
+      bgColor: "bg-blue-100/80",
       message: "Great day ahead with your scheduled appointments!",
     },
     {
@@ -21,8 +21,8 @@ export const Dashboard = () => {
       value: "7",
       change: "-3%",
       icon: FileText,
-      color: "text-orange-400",
-      bgColor: "bg-orange-500/20",
+      color: "text-orange-600",
+      bgColor: "bg-orange-100/80",
       message: "Almost there! A few more forms to complete.",
     },
     {
@@ -30,8 +30,8 @@ export const Dashboard = () => {
       value: "12",
       change: "+8%",
       icon: Heart,
-      color: "text-green-400",
-      bgColor: "bg-green-500/20",
+      color: "text-green-600",
+      bgColor: "bg-green-100/80",
       message: "Helping patients stay healthy with their medications.",
     },
     {
@@ -39,8 +39,8 @@ export const Dashboard = () => {
       value: "3",
       change: "0%",
       icon: Activity,
-      color: "text-red-400",
-      bgColor: "bg-red-500/20",
+      color: "text-red-600",
+      bgColor: "bg-red-100/80",
       message: "Quick review needed for optimal patient care.",
     },
   ];
@@ -82,34 +82,34 @@ export const Dashboard = () => {
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
-      Arrived: "bg-green-500/20 text-green-300 border-green-500/30",
-      Waiting: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30",
-      Roomed: "bg-blue-500/20 text-blue-300 border-blue-500/30",
-      Pending: "bg-gray-500/20 text-gray-300 border-gray-500/30",
+      Arrived: "bg-green-100 text-green-700 border-green-300",
+      Waiting: "bg-yellow-100 text-yellow-700 border-yellow-300",
+      Roomed: "bg-blue-100 text-blue-700 border-blue-300",
+      Pending: "bg-gray-100 text-gray-700 border-gray-300",
     };
-    return statusConfig[status as keyof typeof statusConfig] || "bg-gray-500/20 text-gray-300 border-gray-500/30";
+    return statusConfig[status as keyof typeof statusConfig] || "bg-gray-100 text-gray-700 border-gray-300";
   };
 
   const getHealthStatusClass = (status: string) => {
     const statusClasses = {
-      normal: "border-l-green-400",
-      attention: "border-l-yellow-400",
-      urgent: "border-l-red-400"
+      normal: "border-l-green-500",
+      attention: "border-l-yellow-500",
+      urgent: "border-l-red-500"
     };
-    return statusClasses[status as keyof typeof statusClasses] || "border-l-gray-400";
+    return statusClasses[status as keyof typeof statusClasses] || "border-l-gray-500";
   };
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
             Good morning! Ready to help patients today? 🌟
           </h1>
           <p className="text-muted-foreground mt-1">Your wellness dashboard - keeping care connected</p>
         </div>
         <div className="flex gap-3">
-          <Button className="glass-card hover:neon-glow transition-all duration-300">
+          <Button className="glass-card hover:neon-glow transition-all duration-300 text-white">
             <Plus className="h-4 w-4 mr-2" />
             New Appointment
           </Button>
@@ -156,9 +156,9 @@ export const Dashboard = () => {
         <Card className="lg:col-span-2 glass-card">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-foreground">
-              <Users className="h-5 w-5 text-blue-400" />
+              <Users className="h-5 w-5 text-blue-600" />
               Live Check-In Queue
-              <Badge className="bg-green-500/20 text-green-300 border-green-500/30 pulse-gentle">
+              <Badge className="bg-green-100 text-green-700 border-green-300 pulse-gentle">
                 Live Updates
               </Badge>
             </CardTitle>
@@ -171,7 +171,7 @@ export const Dashboard = () => {
                   className={`flex items-center justify-between p-4 glass-subtle rounded-xl border-l-4 ${getHealthStatusClass(patient.healthStatus)} hover:glass-card transition-all duration-200`}
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center text-white font-medium shadow-lg">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-green-400 rounded-full flex items-center justify-center text-white font-medium shadow-lg">
                       {patient.avatar}
                     </div>
                     <div>
@@ -204,22 +204,22 @@ export const Dashboard = () => {
         <Card className="glass-card">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-foreground">
-              <AlertTriangle className="h-5 w-5 text-orange-400" />
+              <AlertTriangle className="h-5 w-5 text-orange-600" />
               Wellness Alerts
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              <div className="p-4 border-l-4 border-green-400 glass-subtle rounded-lg">
-                <p className="font-medium text-green-300">🎉 Great News!</p>
+              <div className="p-4 border-l-4 border-green-500 glass-subtle rounded-lg">
+                <p className="font-medium text-green-700">🎉 Great News!</p>
                 <p className="text-sm text-muted-foreground">John Doe's lab results are perfectly normal</p>
               </div>
-              <div className="p-4 border-l-4 border-yellow-400 glass-subtle rounded-lg">
-                <p className="font-medium text-yellow-300">💊 Refill Ready</p>
+              <div className="p-4 border-l-4 border-yellow-500 glass-subtle rounded-lg">
+                <p className="font-medium text-yellow-700">💊 Refill Ready</p>
                 <p className="text-sm text-muted-foreground">Jane Smith - Metformin approved</p>
               </div>
-              <div className="p-4 border-l-4 border-blue-400 glass-subtle rounded-lg">
-                <p className="font-medium text-blue-300">📅 Schedule Update</p>
+              <div className="p-4 border-l-4 border-blue-500 glass-subtle rounded-lg">
+                <p className="font-medium text-blue-700">📅 Schedule Update</p>
                 <p className="text-sm text-muted-foreground">Bob Johnson successfully rescheduled</p>
               </div>
             </div>

@@ -9,6 +9,54 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
+    --background: 210 20% 98%;
+    --foreground: 220 25% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 25% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 25% 15%;
+
+    --primary: 160 70% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 200 85% 65%;
+    --secondary-foreground: 220 25% 15%;
+
+    --muted: 210 20% 95%;
+    --muted-foreground: 215 15% 50%;
+
+    --accent: 160 70% 50%;
+    --accent-foreground: 220 25% 15%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 15% 90%;
+    --input: 220 15% 90%;
+    --ring: 160 70% 50%;
+
+    --radius: 1rem;
+
+    --sidebar-background: 210 20% 97%;
+    --sidebar-foreground: 220 25% 20%;
+    --sidebar-primary: 160 70% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 20% 93%;
+    --sidebar-accent-foreground: 220 25% 20%;
+    --sidebar-border: 220 15% 88%;
+    --sidebar-ring: 160 70% 50%;
+
+    /* Health-positive colors - brighter and more vibrant */
+    --health-mint: 152 75% 65%;
+    --health-sky: 200 90% 70%;
+    --health-warm: 35 85% 75%;
+    --health-success: 142 80% 45%;
+    --health-warning: 43 95% 60%;
+  }
+
+  .dark {
     --background: 220 25% 4%;
     --foreground: 210 40% 98%;
 
@@ -37,8 +85,6 @@ All colors MUST be HSL.
     --input: 217 32% 17%;
     --ring: 160 60% 45%;
 
-    --radius: 1rem;
-
     --sidebar-background: 222 25% 6%;
     --sidebar-foreground: 210 40% 90%;
     --sidebar-primary: 160 60% 45%;
@@ -48,51 +94,11 @@ All colors MUST be HSL.
     --sidebar-border: 217 32% 15%;
     --sidebar-ring: 160 60% 45%;
 
-    /* Health-positive colors */
     --health-mint: 152 68% 70%;
     --health-sky: 200 85% 70%;
     --health-warm: 35 77% 80%;
     --health-success: 142 76% 36%;
     --health-warning: 43 96% 56%;
-  }
-
-  .light {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 160 60% 45%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 200 85% 60%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 160 60% 45%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 160 60% 45%;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 160 60% 45%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 160 60% 45%;
   }
 }
 
@@ -109,16 +115,16 @@ All colors MUST be HSL.
 
 @layer utilities {
   .glass-card {
-    @apply backdrop-blur-lg bg-white/10 border border-white/20;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    @apply backdrop-blur-lg bg-white/70 border border-white/40;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   }
   
   .neon-glow {
-    box-shadow: 0 0 20px hsl(var(--primary)/0.3), 0 0 40px hsl(var(--primary)/0.1);
+    box-shadow: 0 0 20px hsl(var(--primary)/0.4), 0 0 40px hsl(var(--primary)/0.2);
   }
   
   .health-gradient {
-    background: linear-gradient(135deg, hsl(var(--health-mint)/0.8), hsl(var(--health-sky)/0.8));
+    background: linear-gradient(135deg, hsl(var(--health-mint)/0.9), hsl(var(--health-sky)/0.9));
   }
   
   .pulse-gentle {
@@ -170,7 +176,7 @@ All colors MUST be HSL.
 }
 
 .chat-bubble-user {
-  @apply bg-gradient-to-r from-blue-500 to-blue-600 text-white ml-auto;
+  @apply bg-gradient-to-r from-blue-400 to-blue-500 text-white ml-auto;
 }
 
 .chat-bubble-assistant {
@@ -197,30 +203,30 @@ All colors MUST be HSL.
 .quick-action-btn {
   @apply inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium;
   @apply transition-all duration-200 hover:scale-105 active:scale-95;
-  @apply border border-primary/30 bg-primary/10 text-primary hover:bg-primary/20;
+  @apply border border-primary/40 bg-primary/15 text-primary hover:bg-primary/25;
 }
 
 /* Health status indicators */
 .status-normal {
-  @apply bg-green-100 text-green-800 border-green-200;
+  @apply bg-green-50 text-green-700 border-green-200;
 }
 
 .status-attention {
-  @apply bg-yellow-100 text-yellow-800 border-yellow-200;
+  @apply bg-yellow-50 text-yellow-700 border-yellow-200;
 }
 
 .status-urgent {
-  @apply bg-red-100 text-red-800 border-red-200;
+  @apply bg-red-50 text-red-700 border-red-200;
 }
 
 /* Glassmorphism card variants */
 .glass-elevated {
   @apply glass-card;
   backdrop-filter: blur(20px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
 }
 
 .glass-subtle {
-  @apply backdrop-blur-sm bg-white/5 border border-white/10;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  @apply backdrop-blur-sm bg-white/40 border border-white/30;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
