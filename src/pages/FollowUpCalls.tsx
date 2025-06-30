@@ -39,12 +39,12 @@ interface FollowUpCall {
 }
 
 export const FollowUpCalls = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
-  const [priorityFilter, setPriorityFilter] = useState("all");
-  const [selectedCall, setSelectedCall] = useState<FollowUpCall | null>(null);
-  const [callNotes, setCallNotes] = useState("");
-  const [showCallModal, setShowCallModal] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState<any>(null);
+  const [showRevisitModal, setShowRevisitModal] = useState(false);
+  const [revisitDate, setRevisitDate] = useState("");
+  const [revisitNotes, setRevisitNotes] = useState("");
 
   const [calls, setCalls] = useState<FollowUpCall[]>([
     {
