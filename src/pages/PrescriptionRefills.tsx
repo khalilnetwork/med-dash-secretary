@@ -38,10 +38,16 @@ interface Refill {
 }
 
 export const PrescriptionRefills = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
-  const [urgencyFilter, setUrgencyFilter] = useState("all");
-  const [isSearching, setIsSearching] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState<any>(null);
+  const [showReminderModal, setShowReminderModal] = useState(false);
+  const [reminderSettings, setReminderSettings] = useState({
+    enabled: false,
+    frequency: "daily",
+    time: "09:00",
+    message: "",
+  });
 
   const [refills, setRefills] = useState<Refill[]>([
     {
