@@ -167,12 +167,21 @@ export const CheckInQueue = () => {
                   <TableCell>
                     <div className="flex items-center gap-2">
                       {patient.status === "Pending" && (
-                        <Button size="sm" variant="outline">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => alert(`Checking in ${patient.name}`)}
+                        >
                           Check In
                         </Button>
                       )}
                       {patient.status === "Arrived" && (
-                        <Button size="sm">Room Patient</Button>
+                        <Button
+                          size="sm"
+                          onClick={() => alert(`Rooming ${patient.name}`)}
+                        >
+                          Room Patient
+                        </Button>
                       )}
                     </div>
                   </TableCell>
