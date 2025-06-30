@@ -19,12 +19,14 @@ export const TopNavbar = () => {
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
             <span className="text-primary-foreground font-bold text-sm">
-              MC
+              Dr
             </span>
           </div>
           <div>
-            <h1 className="font-semibold text-foreground">MediCare Clinic</h1>
-            <p className="text-xs text-muted-foreground">Downtown Branch</p>
+            <h1 className="font-semibold text-foreground">
+              Dr. Smith's Office
+            </h1>
+            <p className="text-xs text-muted-foreground">Family Medicine</p>
           </div>
         </div>
       </div>
