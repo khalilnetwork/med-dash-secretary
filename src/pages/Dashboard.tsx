@@ -1,9 +1,18 @@
-
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Calendar, Users, FileText, AlertTriangle, Plus, MessageSquare, Bell, Heart, Activity } from 'lucide-react';
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  Calendar,
+  Users,
+  FileText,
+  AlertTriangle,
+  Plus,
+  MessageSquare,
+  Bell,
+  Heart,
+  Activity,
+} from "lucide-react";
 
 export const Dashboard = () => {
   const metrics = [
@@ -52,7 +61,7 @@ export const Dashboard = () => {
       time: "9:00 AM",
       status: "Arrived",
       avatar: "SJ",
-      healthStatus: "normal"
+      healthStatus: "normal",
     },
     {
       id: 2,
@@ -60,7 +69,7 @@ export const Dashboard = () => {
       time: "9:15 AM",
       status: "Waiting",
       avatar: "MC",
-      healthStatus: "normal"
+      healthStatus: "normal",
     },
     {
       id: 3,
@@ -68,7 +77,7 @@ export const Dashboard = () => {
       time: "9:30 AM",
       status: "Roomed",
       avatar: "ED",
-      healthStatus: "attention"
+      healthStatus: "attention",
     },
     {
       id: 4,
@@ -76,7 +85,7 @@ export const Dashboard = () => {
       time: "9:45 AM",
       status: "Pending",
       avatar: "RW",
-      healthStatus: "normal"
+      healthStatus: "normal",
     },
   ];
 
@@ -87,16 +96,21 @@ export const Dashboard = () => {
       Roomed: "bg-blue-100 text-blue-700 border-blue-300",
       Pending: "bg-gray-100 text-gray-700 border-gray-300",
     };
-    return statusConfig[status as keyof typeof statusConfig] || "bg-gray-100 text-gray-700 border-gray-300";
+    return (
+      statusConfig[status as keyof typeof statusConfig] ||
+      "bg-gray-100 text-gray-700 border-gray-300"
+    );
   };
 
   const getHealthStatusClass = (status: string) => {
     const statusClasses = {
       normal: "border-l-green-500",
       attention: "border-l-yellow-500",
-      urgent: "border-l-red-500"
+      urgent: "border-l-red-500",
     };
-    return statusClasses[status as keyof typeof statusClasses] || "border-l-gray-500";
+    return (
+      statusClasses[status as keyof typeof statusClasses] || "border-l-gray-500"
+    );
   };
 
   return (
@@ -106,18 +120,31 @@ export const Dashboard = () => {
           <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
             Good morning! Ready to help patients today? 🌟
           </h1>
-          <p className="text-muted-foreground mt-1">Your wellness dashboard - keeping care connected</p>
+          <p className="text-muted-foreground mt-1">
+            Your wellness dashboard - keeping care connected
+          </p>
         </div>
         <div className="flex gap-3">
-          <Button className="glass-card hover:neon-glow transition-all duration-300 text-white">
+          <Button
+            className="glass-card hover:neon-glow transition-all duration-300 text-white"
+            onClick={() => alert("New Appointment feature coming soon!")}
+          >
             <Plus className="h-4 w-4 mr-2" />
             New Appointment
           </Button>
-          <Button variant="outline" className="glass-subtle hover:glass-card transition-all duration-300">
+          <Button
+            variant="outline"
+            className="glass-subtle hover:glass-card transition-all duration-300"
+            onClick={() => alert("Send Intake Form feature coming soon!")}
+          >
             <MessageSquare className="h-4 w-4 mr-2" />
             📄 Send Intake Form
           </Button>
-          <Button variant="outline" className="glass-subtle hover:glass-card transition-all duration-300">
+          <Button
+            variant="outline"
+            className="glass-subtle hover:glass-card transition-all duration-300"
+            onClick={() => alert("Batch Reminders feature coming soon!")}
+          >
             <Bell className="h-4 w-4 mr-2" />
             🔔 Batch Reminders
           </Button>
@@ -128,22 +155,35 @@ export const Dashboard = () => {
         {metrics.map((metric) => {
           const IconComponent = metric.icon;
           return (
-            <Card key={metric.title} className="glass-card hover:glass-elevated transition-all duration-300 slide-up">
+            <Card
+              key={metric.title}
+              className="glass-card hover:glass-elevated transition-all duration-300 slide-up"
+            >
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
                   {metric.title}
                 </CardTitle>
-                <div className={`p-3 rounded-xl ${metric.bgColor} pulse-gentle`}>
+                <div
+                  className={`p-3 rounded-xl ${metric.bgColor} pulse-gentle`}
+                >
                   <IconComponent className={`h-5 w-5 ${metric.color}`} />
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-foreground mb-2">{metric.value}</div>
+                <div className="text-3xl font-bold text-foreground mb-2">
+                  {metric.value}
+                </div>
                 <p className="text-xs text-muted-foreground mb-2">
-                  <span className={metric.change.startsWith('+') ? 'text-green-400' : 'text-red-400'}>
+                  <span
+                    className={
+                      metric.change.startsWith("+")
+                        ? "text-green-400"
+                        : "text-red-400"
+                    }
+                  >
                     {metric.change}
-                  </span>
-                  {' '}from yesterday
+                  </span>{" "}
+                  from yesterday
                 </p>
                 <p className="text-xs text-blue-300 italic">{metric.message}</p>
               </CardContent>
@@ -175,7 +215,9 @@ export const Dashboard = () => {
                       {patient.avatar}
                     </div>
                     <div>
-                      <p className="font-medium text-foreground">{patient.name}</p>
+                      <p className="font-medium text-foreground">
+                        {patient.name}
+                      </p>
                       <p className="text-sm text-muted-foreground flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
                         {patient.time}
@@ -187,12 +229,8 @@ export const Dashboard = () => {
                       {patient.status}
                     </Badge>
                     <div className="flex gap-2">
-                      <button className="quick-action-btn">
-                        ✅ Complete
-                      </button>
-                      <button className="quick-action-btn">
-                        📞 Call
-                      </button>
+                      <button className="quick-action-btn">✅ Complete</button>
+                      <button className="quick-action-btn">📞 Call</button>
                     </div>
                   </div>
                 </div>
@@ -212,15 +250,21 @@ export const Dashboard = () => {
             <div className="space-y-3">
               <div className="p-4 border-l-4 border-green-500 glass-subtle rounded-lg">
                 <p className="font-medium text-green-700">🎉 Great News!</p>
-                <p className="text-sm text-muted-foreground">John Doe's lab results are perfectly normal</p>
+                <p className="text-sm text-muted-foreground">
+                  John Doe's lab results are perfectly normal
+                </p>
               </div>
               <div className="p-4 border-l-4 border-yellow-500 glass-subtle rounded-lg">
                 <p className="font-medium text-yellow-700">💊 Refill Ready</p>
-                <p className="text-sm text-muted-foreground">Jane Smith - Metformin approved</p>
+                <p className="text-sm text-muted-foreground">
+                  Jane Smith - Metformin approved
+                </p>
               </div>
               <div className="p-4 border-l-4 border-blue-500 glass-subtle rounded-lg">
                 <p className="font-medium text-blue-700">📅 Schedule Update</p>
-                <p className="text-sm text-muted-foreground">Bob Johnson successfully rescheduled</p>
+                <p className="text-sm text-muted-foreground">
+                  Bob Johnson successfully rescheduled
+                </p>
               </div>
             </div>
           </CardContent>
