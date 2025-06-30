@@ -16,6 +16,10 @@ import {
   Phone,
   Clock,
   CheckCircle,
+  UserCheck,
+  ListTodo,
+  BarChart3,
+  Pill,
 } from "lucide-react";
 
 export const Dashboard = () => {
