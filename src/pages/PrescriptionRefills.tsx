@@ -113,29 +113,57 @@ export const PrescriptionRefills = () => {
     },
   ]);
 
-  // Debounced search
-  useEffect(() => {
-    if (searchTerm) {
-      setIsSearching(true);
-      const timeout = setTimeout(() => setIsSearching(false), 300);
-      return () => clearTimeout(timeout);
+  const setupReminder = (patient: any) => {
+    if (!patient.phone) {
+      alert("Patient phone number is required for reminders");
+      return;
     }
-  }, [searchTerm]);
 
-  const updateRefillStatus = (refillId: number, newStatus: string) => {
-    setRefills((prev) =>
-      prev.map((refill) =>
-        refill.id === refillId
-          ? { ...refill, status: newStatus as Refill["status"] }
-          : refill,
+    setSelectedPatient(patient);
+    setReminderSettings({
+      enabled: patient.reminderEnabled,
+      frequency: "daily",
+      time: patient.reminderTime,
+      message: `Hi ${patient.name}, this is a reminder to take your medications as prescribed.`,
+    });
+    setShowReminderModal(true);
+  };
+
+  const saveReminderSettings = () => {
+    setTodaysPatients((prev) =>
+      prev.map((p) =>
+        p.id === selectedPatient.id
+          ? {
+              ...p,
+              reminderEnabled: reminderSettings.enabled,
+              reminderTime: reminderSettings.time,
+            }
+          : p,
       ),
     );
 
-    const refill = refills.find((r) => r.id === refillId);
     setTimeout(() => {
+      const status = reminderSettings.enabled ? "enabled" : "disabled";
       alert(
-        `✅ ${refill?.medication} refill for ${refill?.patientName} ${newStatus}!`,
+        `✅ Medication reminder ${status} for ${selectedPatient.name}\n\n${reminderSettings.enabled ? `Reminder set for ${reminderSettings.time} daily` : "No reminders will be sent"}`,
       );
+    }, 100);
+
+    setShowReminderModal(false);
+    setSelectedPatient(null);
+  };
+
+  const disableReminder = (patientId: number) => {
+    const patient = todaysPatients.find((p) => p.id === patientId);
+
+    setTodaysPatients((prev) =>
+      prev.map((p) =>
+        p.id === patientId ? { ...p, reminderEnabled: false } : p,
+      ),
+    );
+
+    setTimeout(() => {
+      alert(`❌ Medication reminder disabled for ${patient?.name}`);
     }, 100);
   };
 
