@@ -156,36 +156,36 @@ export const Dashboard = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            Good morning! Ready to help patients today? 🌟
+            Welcome to Dr. Smith's Office 👩‍⚕️
           </h1>
           <p className="text-muted-foreground mt-1">
-            Secretary Dashboard • Last updated:{" "}
-            {lastUpdate.toLocaleTimeString()}
+            Patient Care Workflow • Today's Schedule •{" "}
+            {lastUpdate.toLocaleDateString()}
           </p>
         </div>
         <div className="flex gap-3">
           <Button
             className="glass-card hover:neon-glow transition-all duration-300 text-white"
-            onClick={scheduleAppointment}
+            onClick={() => navigate("/new-patient")}
           >
             <Plus className="h-4 w-4 mr-2" />
+            Add New Patient
+          </Button>
+          <Button
+            variant="outline"
+            className="glass-subtle hover:glass-card transition-all duration-300"
+            onClick={() => navigate("/schedule")}
+          >
+            <Calendar className="h-4 w-4 mr-2" />
+            Today's Schedule
+          </Button>
+          <Button
+            variant="outline"
+            className="glass-subtle hover:glass-card transition-all duration-300"
+            onClick={() => navigate("/appointments")}
+          >
+            <Clock className="h-4 w-4 mr-2" />
             Book Appointment
-          </Button>
-          <Button
-            variant="outline"
-            className="glass-subtle hover:glass-card transition-all duration-300"
-            onClick={sendIntakeForm}
-          >
-            <MessageSquare className="h-4 w-4 mr-2" />
-            Send Form
-          </Button>
-          <Button
-            variant="outline"
-            className="glass-subtle hover:glass-card transition-all duration-300"
-            onClick={sendReminders}
-          >
-            <Bell className="h-4 w-4 mr-2" />
-            Send Reminders
           </Button>
         </div>
       </div>
