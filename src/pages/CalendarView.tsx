@@ -571,7 +571,7 @@ export const CalendarView = () => {
                 <Button
                   variant="outline"
                   className="w-full justify-start hover:scale-105 active:scale-95 transition-transform duration-150"
-                  onClick={() => alert("Block time feature coming soon!")}
+                  onClick={blockTimeSlot}
                 >
                   <Clock className="h-4 w-4 mr-2" />
                   Block Time
@@ -579,9 +579,7 @@ export const CalendarView = () => {
                 <Button
                   variant="outline"
                   className="w-full justify-start hover:scale-105 active:scale-95 transition-transform duration-150"
-                  onClick={() =>
-                    alert("View availability feature coming soon!")
-                  }
+                  onClick={viewAvailability}
                 >
                   <Calendar className="h-4 w-4 mr-2" />
                   View Availability
@@ -589,10 +587,26 @@ export const CalendarView = () => {
                 <Button
                   variant="outline"
                   className="w-full justify-start hover:scale-105 active:scale-95 transition-transform duration-150"
-                  onClick={() => alert("Patient lookup feature coming soon!")}
+                  onClick={patientLookup}
                 >
                   <User className="h-4 w-4 mr-2" />
                   Patient Lookup
+                </Button>
+                <Button
+                  variant="outline"
+                  className="w-full justify-start hover:scale-105 active:scale-95 transition-transform duration-150"
+                  onClick={() => navigate("/agenda")}
+                >
+                  <Clock className="h-4 w-4 mr-2" />
+                  Today's Agenda
+                </Button>
+                <Button
+                  variant="outline"
+                  className="w-full justify-start hover:scale-105 active:scale-95 transition-transform duration-150"
+                  onClick={() => navigate("/callbacks")}
+                >
+                  <User className="h-4 w-4 mr-2" />
+                  Follow-up Calls
                 </Button>
               </CardContent>
             </Card>
