@@ -96,6 +96,15 @@ export const CheckInQueue = () => {
     );
   };
 
+  // Debounced search
+  useEffect(() => {
+    if (searchTerm) {
+      setIsSearching(true);
+      const timeout = setTimeout(() => setIsSearching(false), 300);
+      return () => clearTimeout(timeout);
+    }
+  }, [searchTerm]);
+
   const filteredPatients = patients.filter((patient) => {
     const matchesSearch = patient.name
       .toLowerCase()
