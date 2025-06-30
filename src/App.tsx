@@ -52,16 +52,7 @@ const App = () => (
             {/* Visit Routes */}
             <Route path="schedule" element={<TodaysAgenda />} />
             <Route path="queue" element={<CheckInQueue />} />
-            <Route
-              path="new-patient"
-              element={
-                <div className="p-8">
-                  <h1 className="text-2xl font-bold text-foreground">
-                    New Patient Form - Building...
-                  </h1>
-                </div>
-              }
-            />
+            <Route path="new-patient" element={<NewPatient />} />
 
             {/* Post-Visit Routes */}
             <Route path="follow-up" element={<FollowUpCalls />} />
