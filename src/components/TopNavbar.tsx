@@ -17,12 +17,14 @@ export const TopNavbar = () => {
         <SidebarTrigger />
 
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">MC</span>
+          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <span className="text-primary-foreground font-bold text-sm">
+              MC
+            </span>
           </div>
           <div>
-            <h1 className="font-semibold text-gray-900">MediCare Clinic</h1>
-            <p className="text-xs text-gray-500">Downtown Branch</p>
+            <h1 className="font-semibold text-foreground">MediCare Clinic</h1>
+            <p className="text-xs text-muted-foreground">Downtown Branch</p>
           </div>
         </div>
       </div>
