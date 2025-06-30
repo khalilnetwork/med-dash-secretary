@@ -25,63 +25,18 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Dashboard />} />
-            <Route
-              path="calendar"
-              element={
-                <div className="p-8">
-                  <h1 className="text-2xl font-bold text-white">
-                    Calendar View - Coming Soon
-                  </h1>
-                </div>
-              }
-            />
-            <Route
-              path="agenda"
-              element={
-                <div className="p-8">
-                  <h1 className="text-2xl font-bold text-white">
-                    Today's Agenda - Coming Soon
-                  </h1>
-                </div>
-              }
-            />
+            <Route path="calendar" element={<CalendarView />} />
+            <Route path="agenda" element={<TodaysAgenda />} />
             <Route path="check-in" element={<CheckInQueue />} />
             <Route path="intake" element={<IntakeTasks />} />
-            <Route
-              path="refills"
-              element={
-                <div className="p-8">
-                  <h1 className="text-2xl font-bold text-white">
-                    Prescription Refills - Coming Soon
-                  </h1>
-                </div>
-              }
-            />
-            <Route
-              path="callbacks"
-              element={
-                <div className="p-8">
-                  <h1 className="text-2xl font-bold text-white">
-                    Follow-Up Calls - Coming Soon
-                  </h1>
-                </div>
-              }
-            />
-            <Route
-              path="lab-alerts"
-              element={
-                <div className="p-8">
-                  <h1 className="text-2xl font-bold text-white">
-                    Lab Alerts - Coming Soon
-                  </h1>
-                </div>
-              }
-            />
+            <Route path="refills" element={<PrescriptionRefills />} />
+            <Route path="callbacks" element={<FollowUpCalls />} />
+            <Route path="lab-alerts" element={<LabAlerts />} />
             <Route
               path="reports"
               element={
                 <div className="p-8">
-                  <h1 className="text-2xl font-bold text-white">
+                  <h1 className="text-2xl font-bold text-foreground">
                     Reports - Coming Soon
                   </h1>
                 </div>
@@ -91,7 +46,7 @@ const App = () => (
               path="settings"
               element={
                 <div className="p-8">
-                  <h1 className="text-2xl font-bold text-white">
+                  <h1 className="text-2xl font-bold text-foreground">
                     Settings - Coming Soon
                   </h1>
                 </div>
