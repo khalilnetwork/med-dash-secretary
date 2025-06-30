@@ -21,12 +21,15 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Dashboard />} />
+            <Route path="calendar" element={<div className="p-8"><h1 className="text-2xl font-bold text-white">Calendar View - Coming Soon</h1></div>} />
+            <Route path="agenda" element={<div className="p-8"><h1 className="text-2xl font-bold text-white">Today's Agenda - Coming Soon</h1></div>} />
             <Route path="check-in" element={<CheckInQueue />} />
             <Route path="intake" element={<IntakeTasks />} />
-            <Route path="calendar" element={<div className="p-8"><h1 className="text-2xl font-bold">Calendar - Coming Soon</h1></div>} />
-            <Route path="refills" element={<div className="p-8"><h1 className="text-2xl font-bold">Refill Queue - Coming Soon</h1></div>} />
-            <Route path="callbacks" element={<div className="p-8"><h1 className="text-2xl font-bold">Call-Back Queue - Coming Soon</h1></div>} />
-            <Route path="reports" element={<div className="p-8"><h1 className="text-2xl font-bold">Reports - Coming Soon</h1></div>} />
+            <Route path="refills" element={<div className="p-8"><h1 className="text-2xl font-bold text-white">Prescription Refills - Coming Soon</h1></div>} />
+            <Route path="callbacks" element={<div className="p-8"><h1 className="text-2xl font-bold text-white">Follow-Up Calls - Coming Soon</h1></div>} />
+            <Route path="lab-alerts" element={<div className="p-8"><h1 className="text-2xl font-bold text-white">Lab Alerts - Coming Soon</h1></div>} />
+            <Route path="reports" element={<div className="p-8"><h1 className="text-2xl font-bold text-white">Reports - Coming Soon</h1></div>} />
+            <Route path="settings" element={<div className="p-8"><h1 className="text-2xl font-bold text-white">Settings - Coming Soon</h1></div>} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
