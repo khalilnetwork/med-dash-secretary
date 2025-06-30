@@ -1,15 +1,21 @@
-
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Search, Filter, UserCheck, Send, CheckCircle } from 'lucide-react';
+import React, { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Search, Filter, UserCheck, Send, CheckCircle } from "lucide-react";
 
 export const CheckInQueue = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
 
   const patients = [
     {
@@ -18,7 +24,7 @@ export const CheckInQueue = () => {
       name: "Sarah Johnson",
       status: "Arrived",
       intakeComplete: true,
-      avatar: "SJ"
+      avatar: "SJ",
     },
     {
       id: 2,
@@ -26,7 +32,7 @@ export const CheckInQueue = () => {
       name: "Michael Chen",
       status: "Pending",
       intakeComplete: false,
-      avatar: "MC"
+      avatar: "MC",
     },
     {
       id: 3,
@@ -34,7 +40,7 @@ export const CheckInQueue = () => {
       name: "Emily Davis",
       status: "Arrived",
       intakeComplete: true,
-      avatar: "ED"
+      avatar: "ED",
     },
     {
       id: 4,
@@ -42,7 +48,7 @@ export const CheckInQueue = () => {
       name: "Robert Wilson",
       status: "Pending",
       intakeComplete: false,
-      avatar: "RW"
+      avatar: "RW",
     },
     {
       id: 5,
@@ -50,7 +56,7 @@ export const CheckInQueue = () => {
       name: "Lisa Brown",
       status: "Arrived",
       intakeComplete: false,
-      avatar: "LB"
+      avatar: "LB",
     },
   ];
 
@@ -60,12 +66,18 @@ export const CheckInQueue = () => {
       Pending: "bg-gray-100 text-gray-800",
       Roomed: "bg-blue-100 text-blue-800",
     };
-    return statusConfig[status as keyof typeof statusConfig] || "bg-gray-100 text-gray-800";
+    return (
+      statusConfig[status as keyof typeof statusConfig] ||
+      "bg-gray-100 text-gray-800"
+    );
   };
 
-  const filteredPatients = patients.filter(patient => {
-    const matchesSearch = patient.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = statusFilter === 'all' || patient.status.toLowerCase() === statusFilter;
+  const filteredPatients = patients.filter((patient) => {
+    const matchesSearch = patient.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const matchesStatus =
+      statusFilter === "all" || patient.status.toLowerCase() === statusFilter;
     return matchesSearch && matchesStatus;
   });
 
@@ -74,11 +86,14 @@ export const CheckInQueue = () => {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold text-gray-900">Check-In Queue</h1>
         <div className="flex gap-2">
-          <Button>
+          <Button onClick={() => alert("All patients marked as arrived!")}>
             <UserCheck className="h-4 w-4 mr-2" />
             Mark All Arrived
           </Button>
-          <Button variant="outline">
+          <Button
+            variant="outline"
+            onClick={() => alert("Reminders sent to all patients!")}
+          >
             <Send className="h-4 w-4 mr-2" />
             Send Reminders
           </Button>
@@ -151,15 +166,13 @@ export const CheckInQueue = () => {
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      {patient.status === 'Pending' && (
+                      {patient.status === "Pending" && (
                         <Button size="sm" variant="outline">
                           Check In
                         </Button>
                       )}
-                      {patient.status === 'Arrived' && (
-                        <Button size="sm">
-                          Room Patient
-                        </Button>
+                      {patient.status === "Arrived" && (
+                        <Button size="sm">Room Patient</Button>
                       )}
                     </div>
                   </TableCell>
