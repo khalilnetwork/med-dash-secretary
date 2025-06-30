@@ -208,37 +208,18 @@ export const PrescriptionRefills = () => {
     }
   };
 
-  const filteredRefills = refills.filter((refill) => {
-    const matchesSearch =
-      refill.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      refill.medication.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus =
-      statusFilter === "all" || refill.status === statusFilter;
-    const matchesUrgency =
-      urgencyFilter === "all" || refill.urgency === urgencyFilter;
-    return matchesSearch && matchesStatus && matchesUrgency;
-  });
+  const filteredPatients = todaysPatients.filter((patient) =>
+    patient.name.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
 
   const stats = {
-    total: refills.length,
-    pending: refills.filter((r) => r.status === "pending").length,
-    approved: refills.filter((r) => r.status === "approved").length,
-    urgent: refills.filter((r) => r.urgency === "urgent").length,
-  };
-
-  const approveAll = () => {
-    const pendingRefills = refills.filter((r) => r.status === "pending");
-    setRefills((prev) =>
-      prev.map((refill) =>
-        refill.status === "pending"
-          ? { ...refill, status: "approved" }
-          : refill,
-      ),
-    );
-    setTimeout(
-      () => alert(`✅ ${pendingRefills.length} refills approved!`),
-      100,
-    );
+    total: todaysPatients.length,
+    withMedications: todaysPatients.filter((p) => p.medications.length > 0)
+      .length,
+    remindersEnabled: todaysPatients.filter((p) => p.reminderEnabled).length,
+    needsSetup: todaysPatients.filter(
+      (p) => p.medications.length > 0 && !p.reminderEnabled,
+    ).length,
   };
 
   return (
