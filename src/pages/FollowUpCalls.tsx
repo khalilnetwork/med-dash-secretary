@@ -12,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useNavigate } from "react-router-dom";
 import {
   Phone,
   Search,
@@ -21,6 +22,8 @@ import {
   User,
   Calendar,
   PhoneCall,
+  FileText,
+  Bell,
 } from "lucide-react";
 
 interface FollowUpCall {
