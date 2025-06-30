@@ -260,16 +260,21 @@ export const Dashboard = () => {
                     </Badge>
                     <div className="flex gap-2">
                       <button
-                        className="quick-action-btn"
-                        onClick={() =>
-                          alert(`Completing appointment for ${patient.name}`)
-                        }
+                        className="quick-action-btn hover:scale-105 active:scale-95 transition-transform duration-150"
+                        onClick={() => completeAppointment(patient.id)}
                       >
                         ✅ Complete
                       </button>
                       <button
-                        className="quick-action-btn"
-                        onClick={() => alert(`Calling ${patient.name}...`)}
+                        className="quick-action-btn hover:scale-105 active:scale-95 transition-transform duration-150"
+                        onClick={() => {
+                          updatePatientStatus(patient.id, "Called");
+                          setTimeout(
+                            () =>
+                              alert(`📞 Calling ${patient.name}... Connected!`),
+                            300,
+                          );
+                        }}
                       >
                         📞 Call
                       </button>
