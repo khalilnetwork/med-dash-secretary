@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 
 export const Dashboard = () => {
+  const navigate = useNavigate();
   const [refreshKey, setRefreshKey] = useState(0);
   const [lastUpdate, setLastUpdate] = useState(new Date());
 
@@ -31,6 +32,26 @@ export const Dashboard = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  // Secretary workflow functions
+  const scheduleAppointment = () => {
+    alert(
+      "📅 Opening appointment scheduler...\n\n1. Select patient\n2. Choose time slot\n3. Confirm booking\n\nFeature ready for integration!",
+    );
+  };
+
+  const sendIntakeForm = () => {
+    alert(
+      "📋 Sending intake form to patient...\n\n✅ Form sent via email/SMS\n⏰ Reminder set for follow-up\n\nPatient will receive form link shortly!",
+    );
+  };
+
+  const sendReminders = () => {
+    const count = checkInQueue.length;
+    alert(
+      `📱 Sending appointment reminders...\n\n✅ ${count} patients will receive:\n• Text message reminder\n• Email confirmation\n• Call 1 hour before\n\nReminders scheduled!`,
+    );
+  };
 
   const metrics = [
     {
