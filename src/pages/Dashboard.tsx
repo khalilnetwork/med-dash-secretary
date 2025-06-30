@@ -67,7 +67,7 @@ export const Dashboard = () => {
     },
   ];
 
-  const checkInQueue = [
+  const [checkInQueue, setCheckInQueue] = useState([
     {
       id: 1,
       name: "Sarah Johnson",
@@ -100,7 +100,24 @@ export const Dashboard = () => {
       avatar: "RW",
       healthStatus: "normal",
     },
-  ];
+  ]);
+
+  const updatePatientStatus = (patientId: number, newStatus: string) => {
+    setCheckInQueue((prev) =>
+      prev.map((patient) =>
+        patient.id === patientId ? { ...patient, status: newStatus } : patient,
+      ),
+    );
+  };
+
+  const completeAppointment = (patientId: number) => {
+    const patient = checkInQueue.find((p) => p.id === patientId);
+    setCheckInQueue((prev) => prev.filter((p) => p.id !== patientId));
+    // Show success message
+    setTimeout(() => {
+      alert(`✅ ${patient?.name}'s appointment completed successfully!`);
+    }, 100);
+  };
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
