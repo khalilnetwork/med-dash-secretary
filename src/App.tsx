@@ -13,6 +13,8 @@ import { PrescriptionRefills } from "./pages/PrescriptionRefills";
 import { FollowUpCalls } from "./pages/FollowUpCalls";
 import { LabAlerts } from "./pages/LabAlerts";
 import { NewPatient } from "./pages/NewPatient";
+import { PatientRecords } from "./pages/PatientRecords";
+import { MedicalHistory } from "./pages/MedicalHistory";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
