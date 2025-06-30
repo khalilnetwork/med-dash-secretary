@@ -373,20 +373,45 @@ export const CalendarView = () => {
               <div className="space-y-1">
                 {timeSlots.map((timeSlot) => {
                   const appointment = appointments.find(
-                    (apt) => apt.time === timeSlot,
+                    (apt) =>
+                      apt.time === timeSlot &&
+                      (searchTerm === "" ||
+                        apt.patient
+                          .toLowerCase()
+                          .includes(searchTerm.toLowerCase()) ||
+                        apt.type
+                          .toLowerCase()
+                          .includes(searchTerm.toLowerCase())),
                   );
+                  const isHovered = hoveredTimeSlot === timeSlot;
 
                   return (
                     <div
                       key={timeSlot}
-                      className="grid grid-cols-12 gap-4 py-2 border-b border-border/50 hover:bg-muted/30 transition-colors duration-200"
+                      className={`grid grid-cols-12 gap-4 py-2 border-b border-border/50 transition-all duration-200 ${
+                        isHovered
+                          ? "bg-primary/10 border-primary/30"
+                          : "hover:bg-muted/30"
+                      }`}
+                      onDragOver={(e) => handleDragOver(e, timeSlot)}
+                      onDragLeave={handleDragLeave}
+                      onDrop={(e) => handleDrop(e, timeSlot)}
                     >
                       <div className="col-span-1 text-sm text-muted-foreground font-medium">
                         {timeSlot}
                       </div>
                       <div className="col-span-11">
                         {appointment ? (
-                          <div className="p-3 glass-subtle rounded-lg border-l-4 border-primary hover:glass-card transition-all duration-200 slide-up">
+                          <div
+                            draggable
+                            onDragStart={(e) => handleDragStart(e, appointment)}
+                            onDragEnd={handleDragEnd}
+                            className={`p-3 glass-subtle rounded-lg border-l-4 border-primary hover:glass-card transition-all duration-200 slide-up cursor-move ${
+                              draggedAppointment?.id === appointment.id
+                                ? "opacity-50"
+                                : ""
+                            }`}
+                          >
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-3">
                                 <div>
@@ -419,38 +444,60 @@ export const CalendarView = () => {
                                   {appointment.status}
                                 </Badge>
                                 <div className="flex gap-1">
+                                  {appointment.status === "scheduled" && (
+                                    <Button
+                                      size="sm"
+                                      variant="outline"
+                                      onClick={() =>
+                                        updateAppointmentStatus(
+                                          appointment.id,
+                                          "in-progress",
+                                        )
+                                      }
+                                      className="hover:scale-105 active:scale-95 transition-transform duration-150"
+                                    >
+                                      Start
+                                    </Button>
+                                  )}
+                                  {appointment.status === "in-progress" && (
+                                    <Button
+                                      size="sm"
+                                      onClick={() =>
+                                        updateAppointmentStatus(
+                                          appointment.id,
+                                          "completed",
+                                        )
+                                      }
+                                      className="hover:scale-105 active:scale-95 transition-transform duration-150"
+                                    >
+                                      Complete
+                                    </Button>
+                                  )}
                                   <Button
                                     size="sm"
                                     variant="outline"
                                     onClick={() =>
-                                      updateAppointmentStatus(
-                                        appointment.id,
-                                        "in-progress",
-                                      )
+                                      deleteAppointment(appointment.id)
                                     }
-                                    className="hover:scale-105 active:scale-95 transition-transform duration-150"
+                                    className="hover:scale-105 active:scale-95 transition-transform duration-150 text-red-600 hover:text-red-700"
                                   >
-                                    Start
-                                  </Button>
-                                  <Button
-                                    size="sm"
-                                    onClick={() =>
-                                      updateAppointmentStatus(
-                                        appointment.id,
-                                        "completed",
-                                      )
-                                    }
-                                    className="hover:scale-105 active:scale-95 transition-transform duration-150"
-                                  >
-                                    Complete
+                                    Cancel
                                   </Button>
                                 </div>
                               </div>
                             </div>
                           </div>
                         ) : (
-                          <div className="h-12 flex items-center text-muted-foreground text-sm italic opacity-50">
-                            Available
+                          <div
+                            className={`h-12 flex items-center text-muted-foreground text-sm italic transition-all duration-200 ${
+                              isHovered
+                                ? "bg-primary/5 text-primary font-medium"
+                                : "opacity-50"
+                            }`}
+                          >
+                            {isHovered
+                              ? "📅 Drop here to reschedule"
+                              : 'Available - Click "New Appointment" to book'}
                           </div>
                         )}
                       </div>
