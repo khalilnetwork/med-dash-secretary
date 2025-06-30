@@ -13,6 +13,8 @@ import {
   BarChart3,
   Settings,
   ChevronDown,
+  FileText,
+  User,
 } from "lucide-react";
 import {
   Sidebar,
