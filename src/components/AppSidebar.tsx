@@ -1,6 +1,5 @@
-
-import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import React from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
   Calendar,
@@ -14,7 +13,7 @@ import {
   BarChart3,
   Settings,
   ChevronDown,
-} from 'lucide-react';
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -28,76 +27,78 @@ import {
   SidebarMenuSubItem,
   SidebarMenuSubButton,
   useSidebar,
-} from '@/components/ui/sidebar';
+} from "@/components/ui/sidebar";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from '@/components/ui/collapsible';
+} from "@/components/ui/collapsible";
 
 const menuItems = [
-  { 
-    title: 'Dashboard', 
-    url: '/', 
-    icon: LayoutDashboard 
+  {
+    title: "Dashboard",
+    url: "/",
+    icon: LayoutDashboard,
   },
   {
-    title: 'Appointments',
+    title: "Appointments",
     icon: Calendar,
     subItems: [
-      { title: 'Calendar View', url: '/calendar', icon: Calendar },
-      { title: "Today's Agenda", url: '/agenda', icon: Clock },
+      { title: "Calendar View", url: "/calendar", icon: Calendar },
+      { title: "Today's Agenda", url: "/agenda", icon: Clock },
     ],
   },
   {
-    title: 'Check-In',
+    title: "Check-In",
     icon: UserCheck,
     subItems: [
-      { title: 'Check-In Queue', url: '/check-in', icon: UserCheck },
-      { title: 'Intake Forms', url: '/intake', icon: ClipboardList },
+      { title: "Check-In Queue", url: "/check-in", icon: UserCheck },
+      { title: "Intake Forms", url: "/intake", icon: ClipboardList },
     ],
   },
   {
-    title: 'Tasks & Queues',
+    title: "Tasks & Queues",
     icon: ListTodo,
     subItems: [
-      { title: 'Prescription Refills', url: '/refills', icon: Pill },
-      { title: 'Follow-Up Calls', url: '/callbacks', icon: Phone },
-      { title: 'Lab Alerts', url: '/lab-alerts', icon: AlertTriangle },
+      { title: "Prescription Refills", url: "/refills", icon: Pill },
+      { title: "Follow-Up Calls", url: "/callbacks", icon: Phone },
+      { title: "Lab Alerts", url: "/lab-alerts", icon: AlertTriangle },
     ],
   },
-  { 
-    title: 'Reports', 
-    url: '/reports', 
-    icon: BarChart3 
+  {
+    title: "Reports",
+    url: "/reports",
+    icon: BarChart3,
   },
-  { 
-    title: 'Settings', 
-    url: '/settings', 
-    icon: Settings 
+  {
+    title: "Settings",
+    url: "/settings",
+    icon: Settings,
   },
 ];
 
 export const AppSidebar = () => {
   const { state } = useSidebar();
   const location = useLocation();
-  const isCollapsed = state === 'collapsed';
+  const isCollapsed = state === "collapsed";
 
   const getNavClassName = ({ isActive }: { isActive: boolean }) =>
-    isActive 
-      ? 'bg-blue-100 text-blue-700 font-medium' 
-      : 'hover:bg-gray-100 text-gray-700';
+    isActive
+      ? "bg-sidebar-accent text-sidebar-primary font-medium"
+      : "hover:bg-sidebar-accent/50 text-sidebar-foreground";
 
   const isGroupActive = (item: any) => {
     if (item.url) return location.pathname === item.url;
     if (item.subItems) {
-      return item.subItems.some((subItem: any) => location.pathname === subItem.url);
+      return item.subItems.some(
+        (subItem: any) => location.pathname === subItem.url,
+      );
     }
     return false;
   };
 
   return (
-    <Sidebar collapsible="icon" className={isCollapsed ? 'w-16' : 'w-64'}>
+    <Sidebar collapsible="icon" className={isCollapsed ? "w-16" : "w-64"}>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
@@ -110,7 +111,9 @@ export const AppSidebar = () => {
                         <SidebarMenuButton className="w-full justify-between">
                           <div className="flex items-center">
                             <item.icon className="h-5 w-5" />
-                            {!isCollapsed && <span className="ml-2">{item.title}</span>}
+                            {!isCollapsed && (
+                              <span className="ml-2">{item.title}</span>
+                            )}
                           </div>
                           {!isCollapsed && (
                             <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
@@ -123,9 +126,9 @@ export const AppSidebar = () => {
                             {item.subItems.map((subItem: any) => (
                               <SidebarMenuSubItem key={subItem.title}>
                                 <SidebarMenuSubButton asChild>
-                                  <NavLink 
-                                    to={subItem.url} 
-                                    end 
+                                  <NavLink
+                                    to={subItem.url}
+                                    end
                                     className={getNavClassName}
                                   >
                                     <subItem.icon className="h-4 w-4" />
@@ -140,11 +143,7 @@ export const AppSidebar = () => {
                     </Collapsible>
                   ) : (
                     <SidebarMenuButton asChild>
-                      <NavLink 
-                        to={item.url} 
-                        end 
-                        className={getNavClassName}
-                      >
+                      <NavLink to={item.url} end className={getNavClassName}>
                         <item.icon className="h-5 w-5" />
                         {!isCollapsed && <span>{item.title}</span>}
                       </NavLink>
