@@ -320,161 +320,105 @@ export const FollowUpCalls = () => {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2">
-              <Phone className="h-5 w-5 text-primary" />
-              Call List
+              <Calendar className="h-5 w-5 text-primary" />
+              Today's Patients - Follow-up Decision
             </CardTitle>
-            <div className="flex items-center gap-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input
-                  placeholder="Search patients or reasons..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 w-64"
-                />
-              </div>
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-3 py-2 border border-input rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-              >
-                <option value="all">All Status</option>
-                <option value="scheduled">Scheduled</option>
-                <option value="completed">Completed</option>
-                <option value="no-answer">No Answer</option>
-                <option value="rescheduled">Rescheduled</option>
-                <option value="cancelled">Cancelled</option>
-              </select>
-              <select
-                value={priorityFilter}
-                onChange={(e) => setPriorityFilter(e.target.value)}
-                className="px-3 py-2 border border-input rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-              >
-                <option value="all">All Priority</option>
-                <option value="urgent">Urgent</option>
-                <option value="high">High</option>
-                <option value="medium">Medium</option>
-                <option value="low">Low</option>
-              </select>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+              <Input
+                placeholder="Search patients..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 w-64"
+              />
             </div>
           </div>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Patient</TableHead>
-                <TableHead>Contact</TableHead>
-                <TableHead>Reason</TableHead>
-                <TableHead>Scheduled</TableHead>
-                <TableHead>Priority</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Attempts</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredCalls.map((call) => (
-                <TableRow
-                  key={call.id}
-                  className="hover:bg-muted/30 transition-colors duration-200"
-                >
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-medium">
-                        {call.patientName
-                          .split(" ")
-                          .map((n) => n[0])
-                          .join("")}
-                      </div>
-                      <div>
-                        <p className="font-medium">{call.patientName}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {call.assignedTo}
-                        </p>
-                      </div>
+          <div className="space-y-4">
+            {filteredPatients.map((patient) => (
+              <div
+                key={patient.id}
+                className={`p-4 rounded-lg border transition-all duration-200 ${
+                  patient.status === "revisit-scheduled"
+                    ? "border-blue-300 bg-blue-50/50"
+                    : patient.status === "discharged"
+                      ? "border-green-300 bg-green-50/50"
+                      : "border-border bg-card hover:bg-muted/30"
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-green-400 rounded-full flex items-center justify-center text-white font-medium">
+                      {patient.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")}
                     </div>
-                  </TableCell>
-                  <TableCell>
                     <div>
-                      <p className="font-medium">{call.phone}</p>
+                      <h4 className="font-medium text-foreground">
+                        {patient.name}
+                      </h4>
                       <p className="text-sm text-muted-foreground">
-                        Last: {call.lastContact}
+                        Visit: {patient.visitTime}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Phone: {patient.phone}
                       </p>
                     </div>
-                  </TableCell>
-                  <TableCell>
-                    <p className="text-sm">{call.reason}</p>
-                  </TableCell>
-                  <TableCell>
-                    <div className="text-sm">
-                      <p>{call.scheduledDate}</p>
-                      <p className="text-muted-foreground">
-                        {call.scheduledTime}
+                    <div className="ml-6">
+                      <p className="text-sm font-medium text-foreground">
+                        Diagnosis: {patient.diagnosis}
                       </p>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <div
-                        className={`w-3 h-3 rounded-full ${getPriorityColor(call.priority)}`}
-                      ></div>
-                      <span className="text-sm capitalize">
-                        {call.priority}
-                      </span>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      {getStatusIcon(call.status)}
-                      <Badge className={getStatusColor(call.status)}>
-                        {call.status.replace("-", " ")}
-                      </Badge>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm">{call.attempts}</span>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-1">
-                      {call.status === "scheduled" && (
-                        <>
-                          <Button
-                            size="sm"
-                            onClick={() => makeCall(call)}
-                            className="hover:scale-105 active:scale-95 transition-transform duration-150"
-                          >
-                            <Phone className="h-3 w-3 mr-1" />
-                            Call
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() =>
-                              updateCallStatus(call.id, "rescheduled")
-                            }
-                            className="hover:scale-105 active:scale-95 transition-transform duration-150"
-                          >
-                            Reschedule
-                          </Button>
-                        </>
+                      <p className="text-sm text-muted-foreground">
+                        Treatment: {patient.treatment}
+                      </p>
+                      {patient.needsFollowUp && (
+                        <Badge className="mt-1 bg-yellow-100 text-yellow-800">
+                          Needs Follow-up
+                        </Badge>
                       )}
-                      {call.status === "no-answer" && (
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    {patient.status === "completed" && (
+                      <>
                         <Button
-                          size="sm"
-                          onClick={() => makeCall(call)}
+                          onClick={() => scheduleRevisit(patient)}
+                          className="hover:scale-105 active:scale-95 transition-transform duration-150"
+                          disabled={!patient.needsFollowUp}
+                        >
+                          <Calendar className="h-4 w-4 mr-2" />
+                          Schedule Revisit
+                        </Button>
+                        <Button
+                          variant="outline"
+                          onClick={() => markPatientDone(patient.id)}
                           className="hover:scale-105 active:scale-95 transition-transform duration-150"
                         >
-                          <Phone className="h-3 w-3 mr-1" />
-                          Retry
+                          <CheckCircle className="h-4 w-4 mr-2" />
+                          Mark Done
                         </Button>
-                      )}
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                      </>
+                    )}
+
+                    {patient.status === "revisit-scheduled" && (
+                      <Badge className="bg-blue-100 text-blue-800">
+                        Revisit Scheduled
+                      </Badge>
+                    )}
+
+                    {patient.status === "discharged" && (
+                      <Badge className="bg-green-100 text-green-800">
+                        Completed
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </CardContent>
       </Card>
 
