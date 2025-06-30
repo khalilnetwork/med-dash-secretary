@@ -156,7 +156,7 @@ export const Dashboard = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            Welcome to Dr. Smith's Office 👩‍⚕️
+            Welcome to Dr. Smith's Office 👩‍���️
           </h1>
           <p className="text-muted-foreground mt-1">
             Patient Care Workflow • Today's Schedule •{" "}
@@ -269,104 +269,54 @@ export const Dashboard = () => {
         })}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-2 glass-card">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card className="glass-card">
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="flex items-center gap-2 text-foreground">
-                <Users className="h-5 w-5 text-blue-600" />
-                Today's Patients ({checkInQueue.length})
-                <Badge className="bg-green-100 text-green-700 border-green-300 pulse-gentle">
-                  Live
-                </Badge>
+                <Clock className="h-5 w-5 text-blue-600" />
+                Today's Schedule ({checkInQueue.length} patients)
               </CardTitle>
               <Button
                 size="sm"
                 variant="outline"
-                onClick={() => navigate("/check-in")}
+                onClick={() => navigate("/schedule")}
                 className="hover:scale-105 active:scale-95 transition-transform duration-150"
               >
-                Manage Queue
+                View Full Schedule
               </Button>
             </div>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {checkInQueue.map((patient) => (
+            <div className="space-y-3">
+              {checkInQueue.slice(0, 4).map((patient) => (
                 <div
                   key={patient.id}
-                  className={`flex items-center justify-between p-4 glass-subtle rounded-xl border-l-4 ${getHealthStatusClass(patient.healthStatus)} hover:glass-card transition-all duration-200`}
+                  className={`flex items-center justify-between p-3 glass-subtle rounded-lg border-l-4 ${getHealthStatusClass(patient.healthStatus)} hover:glass-card transition-all duration-200`}
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-green-400 rounded-full flex items-center justify-center text-white font-medium shadow-lg">
+                    <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-green-400 rounded-full flex items-center justify-center text-white font-medium text-sm">
                       {patient.avatar}
                     </div>
                     <div>
-                      <p className="font-medium text-foreground">
+                      <p className="font-medium text-foreground text-sm">
                         {patient.name}
                       </p>
-                      <p className="text-sm text-muted-foreground flex items-center gap-1">
-                        <Calendar className="h-3 w-3" />
-                        {patient.time} appointment
+                      <p className="text-xs text-muted-foreground">
+                        {patient.time}
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <Badge className={getStatusBadge(patient.status)}>
-                      {patient.status}
-                    </Badge>
-                    <div className="flex gap-2">
-                      {patient.status === "Pending" && (
-                        <Button
-                          size="sm"
-                          onClick={() => {
-                            updatePatientStatus(patient.id, "Arrived");
-                            setTimeout(
-                              () => alert(`✅ ${patient.name} checked in!`),
-                              100,
-                            );
-                          }}
-                          className="hover:scale-105 active:scale-95 transition-transform duration-150"
-                        >
-                          Check In
-                        </Button>
-                      )}
-                      {patient.status === "Arrived" && (
-                        <Button
-                          size="sm"
-                          onClick={() => {
-                            updatePatientStatus(patient.id, "Roomed");
-                            setTimeout(
-                              () => alert(`🏥 ${patient.name} moved to room!`),
-                              100,
-                            );
-                          }}
-                          className="hover:scale-105 active:scale-95 transition-transform duration-150"
-                        >
-                          To Room
-                        </Button>
-                      )}
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => {
-                          setTimeout(
-                            () =>
-                              alert(
-                                `📞 Calling ${patient.name}... \n\n"Hi ${patient.name}, this is the clinic. Your appointment is at ${patient.time} today. See you soon!"`,
-                              ),
-                            100,
-                          );
-                        }}
-                        className="hover:scale-105 active:scale-95 transition-transform duration-150"
-                      >
-                        <Phone className="h-3 w-3 mr-1" />
-                        Call
-                      </Button>
-                    </div>
-                  </div>
+                  <Badge className={getStatusBadge(patient.status)}>
+                    {patient.status}
+                  </Badge>
                 </div>
               ))}
+              {checkInQueue.length > 4 && (
+                <div className="text-center text-sm text-muted-foreground py-2">
+                  +{checkInQueue.length - 4} more patients...
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
