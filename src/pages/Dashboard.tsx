@@ -190,41 +190,78 @@ export const Dashboard = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {metrics.map((metric) => {
-          const IconComponent = metric.icon;
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {workflowPhases.map((phase) => {
+          const IconComponent = phase.icon;
+          const getPriorityColor = (priority: string) => {
+            switch (priority) {
+              case "urgent":
+                return "text-red-600 bg-red-100";
+              case "high":
+                return "text-orange-600 bg-orange-100";
+              case "medium":
+                return "text-yellow-600 bg-yellow-100";
+              case "low":
+                return "text-green-600 bg-green-100";
+              default:
+                return "text-gray-600 bg-gray-100";
+            }
+          };
+
           return (
             <Card
-              key={metric.title}
+              key={phase.title}
               className="glass-card hover:glass-elevated transition-all duration-300 slide-up cursor-pointer"
-              onClick={metric.onClick}
+              onClick={phase.onClick}
             >
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  {metric.title}
-                </CardTitle>
-                <div
-                  className={`p-3 rounded-xl ${metric.bgColor} pulse-gentle`}
-                >
-                  <IconComponent className={`h-5 w-5 ${metric.color}`} />
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg font-semibold text-foreground">
+                    {phase.title}
+                  </CardTitle>
+                  <div
+                    className={`p-3 rounded-xl ${phase.bgColor} pulse-gentle`}
+                  >
+                    <IconComponent className={`h-6 w-6 ${phase.color}`} />
+                  </div>
                 </div>
+                <p className="text-sm text-muted-foreground">
+                  {phase.description}
+                </p>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-foreground mb-2">
-                  {metric.value}
+                <div className="space-y-3">
+                  {phase.tasks.map((task, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between p-2 glass-subtle rounded-lg"
+                    >
+                      <div>
+                        <p className="text-sm font-medium text-foreground">
+                          {task.name}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg font-bold text-foreground">
+                          {task.count}
+                        </span>
+                        <Badge
+                          className={`text-xs ${getPriorityColor(task.priority)}`}
+                        >
+                          {task.priority}
+                        </Badge>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <p className="text-xs text-muted-foreground mb-3">
-                  {metric.message}
-                </p>
                 <Button
-                  size="sm"
-                  className="w-full hover:scale-105 active:scale-95 transition-transform duration-150"
+                  className="w-full mt-4 hover:scale-105 active:scale-95 transition-transform duration-150"
                   onClick={(e) => {
                     e.stopPropagation();
-                    metric.onClick();
+                    phase.onClick();
                   }}
                 >
-                  {metric.action}
+                  Manage {phase.title}
                 </Button>
               </CardContent>
             </Card>
