@@ -104,47 +104,54 @@ export const FollowUpCalls = () => {
     },
   ]);
 
-  const updateCallStatus = (
-    callId: number,
-    newStatus: string,
-    notes?: string,
-  ) => {
-    setCalls((prev) =>
-      prev.map((call) =>
-        call.id === callId
-          ? {
-              ...call,
-              status: newStatus as FollowUpCall["status"],
-              notes: notes || call.notes,
-              attempts: call.attempts + 1,
-              lastContact: new Date().toISOString().split("T")[0],
-            }
-          : call,
+  const scheduleRevisit = (patient: any) => {
+    setSelectedPatient(patient);
+    setRevisitDate("");
+    setRevisitNotes("");
+    setShowRevisitModal(true);
+  };
+
+  const confirmRevisit = () => {
+    if (!revisitDate) {
+      alert("Please select a date for the revisit");
+      return;
+    }
+
+    setTodaysPatients((prev) =>
+      prev.map((p) =>
+        p.id === selectedPatient.id ? { ...p, status: "revisit-scheduled" } : p,
       ),
     );
 
-    const call = calls.find((c) => c.id === callId);
     setTimeout(() => {
-      alert(`📞 Call to ${call?.patientName} marked as ${newStatus}!`);
+      alert(
+        `✅ Revisit scheduled for ${selectedPatient.name} on ${revisitDate}\n\nAppointment has been added to the calendar.`,
+      );
     }, 100);
+
+    setShowRevisitModal(false);
+    setSelectedPatient(null);
   };
 
-  const makeCall = (call: FollowUpCall) => {
-    setSelectedCall(call);
-    setCallNotes("");
-    setShowCallModal(true);
-    // Simulate making a call
-    setTimeout(() => {
-      alert(`📞 Calling ${call.patientName} at ${call.phone}...`);
-    }, 100);
-  };
+  const markPatientDone = (patientId: number) => {
+    const patient = todaysPatients.find((p) => p.id === patientId);
 
-  const completeCall = (status: string) => {
-    if (selectedCall) {
-      updateCallStatus(selectedCall.id, status, callNotes);
-      setShowCallModal(false);
-      setSelectedCall(null);
-      setCallNotes("");
+    if (
+      confirm(
+        `Mark ${patient?.name} as completed?\n\nThis patient will be removed from follow-up list.`,
+      )
+    ) {
+      setTodaysPatients((prev) =>
+        prev.map((p) =>
+          p.id === patientId ? { ...p, status: "discharged" } : p,
+        ),
+      );
+
+      setTimeout(() => {
+        alert(
+          `✅ ${patient?.name} marked as completed.\n\nPatient care cycle finished.`,
+        );
+      }, 100);
     }
   };
 
