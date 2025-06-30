@@ -30,9 +30,27 @@ interface Appointment {
 }
 
 export const CalendarView = () => {
+  const navigate = useNavigate();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [viewMode, setViewMode] = useState<"day" | "week" | "month">("day");
+  const [showNewAppointmentModal, setShowNewAppointmentModal] = useState(false);
+  const [draggedAppointment, setDraggedAppointment] =
+    useState<Appointment | null>(null);
+  const [hoveredTimeSlot, setHoveredTimeSlot] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // New appointment form state
+  const [newAppointment, setNewAppointment] = useState({
+    patientName: "",
+    patientPhone: "",
+    appointmentType: "consultation",
+    date: selectedDate.toISOString().split("T")[0],
+    time: "09:00",
+    duration: 30,
+    room: "Room 101",
+    notes: "",
+  });
 
   const appointments: Appointment[] = [
     {
