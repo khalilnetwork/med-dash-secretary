@@ -32,8 +32,9 @@ const menuItems = [
 ];
 
 export const AppSidebar = () => {
-  const { collapsed } = useSidebar();
+  const { state } = useSidebar();
   const location = useLocation();
+  const isCollapsed = state === 'collapsed';
 
   const getNavClassName = ({ isActive }: { isActive: boolean }) =>
     isActive 
@@ -41,7 +42,7 @@ export const AppSidebar = () => {
       : 'hover:bg-gray-100 text-gray-700';
 
   return (
-    <Sidebar collapsible className={collapsed ? 'w-16' : 'w-64'}>
+    <Sidebar collapsible="icon" className={isCollapsed ? 'w-16' : 'w-64'}>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
@@ -55,7 +56,7 @@ export const AppSidebar = () => {
                       className={getNavClassName}
                     >
                       <item.icon className="h-5 w-5" />
-                      {!collapsed && <span>{item.title}</span>}
+                      {!isCollapsed && <span>{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
