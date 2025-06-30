@@ -84,7 +84,7 @@ export const CheckInQueue = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">Check-In Queue</h1>
+        <h1 className="text-3xl font-bold text-foreground">Check-In Queue</h1>
         <div className="flex gap-2">
           <Button onClick={() => alert("All patients marked as arrived!")}>
             <UserCheck className="h-4 w-4 mr-2" />
