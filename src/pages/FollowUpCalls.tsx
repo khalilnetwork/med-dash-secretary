@@ -422,55 +422,59 @@ export const FollowUpCalls = () => {
         </CardContent>
       </Card>
 
-      {/* Call Modal */}
-      {showCallModal && selectedCall && (
+      {/* Revisit Modal */}
+      {showRevisitModal && selectedPatient && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <Card className="w-96 glass-elevated">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Phone className="h-5 w-5 text-primary" />
-                Call in Progress: {selectedCall.patientName}
+                <Calendar className="h-5 w-5 text-primary" />
+                Schedule Revisit: {selectedPatient.name}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <p>
-                  <strong>Phone:</strong> {selectedCall.phone}
+                  <strong>Patient:</strong> {selectedPatient.name}
                 </p>
                 <p>
-                  <strong>Reason:</strong> {selectedCall.reason}
+                  <strong>Last Visit:</strong> {selectedPatient.visitTime}
                 </p>
                 <p>
-                  <strong>Priority:</strong> {selectedCall.priority}
+                  <strong>Diagnosis:</strong> {selectedPatient.diagnosis}
                 </p>
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">Call Notes:</label>
+                <label className="text-sm font-medium">Revisit Date:</label>
+                <Input
+                  type="date"
+                  value={revisitDate}
+                  onChange={(e) => setRevisitDate(e.target.value)}
+                  min={new Date().toISOString().split("T")[0]}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Notes:</label>
                 <Textarea
-                  value={callNotes}
-                  onChange={(e) => setCallNotes(e.target.value)}
-                  placeholder="Enter call notes..."
+                  value={revisitNotes}
+                  onChange={(e) => setRevisitNotes(e.target.value)}
+                  placeholder="Reason for revisit, specific instructions..."
                   className="min-h-20"
                 />
               </div>
 
               <div className="flex gap-2">
                 <Button
-                  onClick={() => completeCall("completed")}
+                  onClick={confirmRevisit}
                   className="flex-1"
+                  disabled={!revisitDate}
                 >
-                  Completed
+                  Schedule Revisit
                 </Button>
                 <Button
-                  onClick={() => completeCall("no-answer")}
-                  variant="outline"
-                  className="flex-1"
-                >
-                  No Answer
-                </Button>
-                <Button
-                  onClick={() => setShowCallModal(false)}
+                  onClick={() => setShowRevisitModal(false)}
                   variant="outline"
                 >
                   Cancel
