@@ -196,23 +196,22 @@ export const FollowUpCalls = () => {
     }
   };
 
-  const filteredCalls = calls.filter((call) => {
-    const matchesSearch =
-      call.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      call.reason.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus =
-      statusFilter === "all" || call.status === statusFilter;
-    const matchesPriority =
-      priorityFilter === "all" || call.priority === priorityFilter;
-    return matchesSearch && matchesStatus && matchesPriority;
-  });
+  const filteredPatients = todaysPatients.filter(
+    (patient) =>
+      patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      patient.diagnosis.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
 
   const stats = {
-    total: calls.length,
-    scheduled: calls.filter((c) => c.status === "scheduled").length,
-    completed: calls.filter((c) => c.status === "completed").length,
-    noAnswer: calls.filter((c) => c.status === "no-answer").length,
-    urgent: calls.filter((c) => c.priority === "urgent").length,
+    total: todaysPatients.length,
+    needsFollowUp: todaysPatients.filter(
+      (p) => p.needsFollowUp && p.status === "completed",
+    ).length,
+    completed: todaysPatients.filter((p) => p.status === "completed").length,
+    revisitScheduled: todaysPatients.filter(
+      (p) => p.status === "revisit-scheduled",
+    ).length,
+    discharged: todaysPatients.filter((p) => p.status === "discharged").length,
   };
 
   const callAllScheduled = () => {
