@@ -207,7 +207,17 @@ export const CheckInQueue = () => {
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => alert(`Checking in ${patient.name}`)}
+                          onClick={() => {
+                            updatePatientStatus(patient.id, "Arrived");
+                            setTimeout(
+                              () =>
+                                alert(
+                                  `✅ ${patient.name} checked in successfully!`,
+                                ),
+                              100,
+                            );
+                          }}
+                          className="hover:scale-105 active:scale-95 transition-transform duration-150"
                         >
                           Check In
                         </Button>
@@ -215,7 +225,17 @@ export const CheckInQueue = () => {
                       {patient.status === "Arrived" && (
                         <Button
                           size="sm"
-                          onClick={() => alert(`Rooming ${patient.name}`)}
+                          onClick={() => {
+                            updatePatientStatus(patient.id, "Roomed");
+                            setTimeout(
+                              () =>
+                                alert(
+                                  `🏥 ${patient.name} moved to room successfully!`,
+                                ),
+                              100,
+                            );
+                          }}
+                          className="hover:scale-105 active:scale-95 transition-transform duration-150"
                         >
                           Room Patient
                         </Button>
