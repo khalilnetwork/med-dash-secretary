@@ -41,34 +41,35 @@ const menuItems = [
     icon: LayoutDashboard,
   },
   {
-    title: "Appointments",
+    title: "Pre-Visit",
     icon: Calendar,
     subItems: [
-      { title: "Calendar View", url: "/calendar", icon: Calendar },
-      { title: "Today's Agenda", url: "/agenda", icon: Clock },
+      { title: "Appointments", url: "/appointments", icon: Calendar },
+      {
+        title: "Patient Records",
+        url: "/patient-records",
+        icon: ClipboardList,
+      },
+      { title: "Medical History", url: "/medical-history", icon: FileText },
     ],
   },
   {
-    title: "Check-In",
+    title: "Visit",
     icon: UserCheck,
     subItems: [
-      { title: "Check-In Queue", url: "/check-in", icon: UserCheck },
-      { title: "Intake Forms", url: "/intake", icon: ClipboardList },
+      { title: "Today's Schedule", url: "/schedule", icon: Clock },
+      { title: "Patient Queue", url: "/queue", icon: UserCheck },
+      { title: "Add New Patient", url: "/new-patient", icon: User },
     ],
   },
   {
-    title: "Tasks & Queues",
+    title: "Post-Visit",
     icon: ListTodo,
     subItems: [
-      { title: "Prescription Refills", url: "/refills", icon: Pill },
-      { title: "Follow-Up Calls", url: "/callbacks", icon: Phone },
-      { title: "Lab Alerts", url: "/lab-alerts", icon: AlertTriangle },
+      { title: "Follow-up Visits", url: "/follow-up", icon: Calendar },
+      { title: "Medication Reminders", url: "/medications", icon: Pill },
+      { title: "Health Reports", url: "/reports", icon: BarChart3 },
     ],
-  },
-  {
-    title: "Reports",
-    url: "/reports",
-    icon: BarChart3,
   },
   {
     title: "Settings",
