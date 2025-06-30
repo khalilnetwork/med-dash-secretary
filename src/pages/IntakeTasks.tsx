@@ -86,14 +86,24 @@ export const IntakeTasks = () => {
     taskId: number,
     sourceColumn: string,
   ) => {
+    const task = tasks[sourceColumn as keyof typeof tasks].find(
+      (t) => t.id === taskId,
+    );
+    setDraggedItem({ taskId, sourceColumn, task });
     e.dataTransfer.setData(
       "text/plain",
       JSON.stringify({ taskId, sourceColumn }),
     );
+    e.dataTransfer.effectAllowed = "move";
   };
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+  };
+
+  const handleDragEnd = () => {
+    setDraggedItem(null);
   };
 
   const handleDrop = (e: React.DragEvent, targetColumn: string) => {
@@ -101,7 +111,10 @@ export const IntakeTasks = () => {
     const data = JSON.parse(e.dataTransfer.getData("text/plain"));
     const { taskId, sourceColumn } = data;
 
-    if (sourceColumn === targetColumn) return;
+    if (sourceColumn === targetColumn) {
+      setDraggedItem(null);
+      return;
+    }
 
     setTasks((prev) => {
       const task = prev[sourceColumn as keyof typeof prev].find(
@@ -109,14 +122,25 @@ export const IntakeTasks = () => {
       );
       if (!task) return prev;
 
-      return {
+      const newTasks = {
         ...prev,
         [sourceColumn]: prev[sourceColumn as keyof typeof prev].filter(
           (t) => t.id !== taskId,
         ),
         [targetColumn]: [...prev[targetColumn as keyof typeof prev], task],
       };
+
+      // Show success message
+      setTimeout(() => {
+        alert(
+          `✅ ${task.patientName}'s form moved to ${targetColumn.replace("-", " ")}!`,
+        );
+      }, 100);
+
+      return newTasks;
     });
+
+    setDraggedItem(null);
   };
 
   return (
