@@ -33,46 +33,45 @@ export const Dashboard = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const metrics = [
+  const workflowPhases = [
     {
-      title: "Today's Appointments",
-      value: "28",
-      action: "View Schedule",
+      title: "Pre-Visit",
+      description: "Prepare for patient visits",
+      tasks: [
+        { name: "Schedule appointments", count: 8, priority: "medium" },
+        { name: "Review patient records", count: 5, priority: "high" },
+        { name: "Prepare medical files", count: 3, priority: "low" },
+      ],
       icon: Calendar,
       color: "text-blue-600",
       bgColor: "bg-blue-100/80",
-      message: "Click to see today's schedule",
-      onClick: () => navigate("/calendar"),
+      onClick: () => navigate("/appointments"),
     },
     {
-      title: "Forms to Send",
-      value: "7",
-      action: "Send Forms",
-      icon: FileText,
-      color: "text-orange-600",
-      bgColor: "bg-orange-100/80",
-      message: "Patients need intake forms",
-      onClick: () => navigate("/intake"),
-    },
-    {
-      title: "Prescription Requests",
-      value: "12",
-      action: "Review Refills",
-      icon: Heart,
+      title: "Visit",
+      description: "Manage current patient visits",
+      tasks: [
+        { name: "Patients in queue", count: 4, priority: "high" },
+        { name: "Current consultation", count: 1, priority: "urgent" },
+        { name: "Waiting for doctor", count: 2, priority: "medium" },
+      ],
+      icon: UserCheck,
       color: "text-green-600",
       bgColor: "bg-green-100/80",
-      message: "Medications need approval",
-      onClick: () => navigate("/refills"),
+      onClick: () => navigate("/schedule"),
     },
     {
-      title: "Urgent Lab Results",
-      value: "3",
-      action: "Check Alerts",
-      icon: Activity,
-      color: "text-red-600",
-      bgColor: "bg-red-100/80",
-      message: "Doctor needs to review",
-      onClick: () => navigate("/lab-alerts"),
+      title: "Post-Visit",
+      description: "Follow-up and health management",
+      tasks: [
+        { name: "Schedule follow-ups", count: 6, priority: "medium" },
+        { name: "Medication reminders", count: 12, priority: "high" },
+        { name: "Health reports", count: 3, priority: "low" },
+      ],
+      icon: ListTodo,
+      color: "text-purple-600",
+      bgColor: "bg-purple-100/80",
+      onClick: () => navigate("/follow-up"),
     },
   ];
 
