@@ -290,10 +290,16 @@ export const CalendarView = () => {
             Today
           </Button>
           <Button
+            variant="outline"
+            onClick={() => navigate("/check-in")}
             className="hover:scale-105 active:scale-95 transition-transform duration-150"
-            onClick={() =>
-              alert("New appointment booking feature coming soon!")
-            }
+          >
+            <User className="h-4 w-4 mr-2" />
+            Check-In Queue
+          </Button>
+          <Button
+            className="hover:scale-105 active:scale-95 transition-transform duration-150"
+            onClick={openNewAppointmentModal}
           >
             <Plus className="h-4 w-4 mr-2" />
             New Appointment
