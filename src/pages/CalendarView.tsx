@@ -141,8 +141,135 @@ export const CalendarView = () => {
     appointmentId: number,
     newStatus: string,
   ) => {
-    // In a real app, this would update the backend
-    alert(`Appointment ${appointmentId} status updated to: ${newStatus}`);
+    setAppointments((prev) =>
+      prev.map((apt) =>
+        apt.id === appointmentId
+          ? { ...apt, status: newStatus as Appointment["status"] }
+          : apt,
+      ),
+    );
+    const appointment = appointments.find((apt) => apt.id === appointmentId);
+    setTimeout(() => {
+      alert(`✅ ${appointment?.patient}'s appointment marked as ${newStatus}!`);
+    }, 100);
+  };
+
+  // Drag and Drop functionality
+  const handleDragStart = (e: React.DragEvent, appointment: Appointment) => {
+    setDraggedAppointment(appointment);
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", appointment.id.toString());
+  };
+
+  const handleDragOver = (e: React.DragEvent, timeSlot: string) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    setHoveredTimeSlot(timeSlot);
+  };
+
+  const handleDragLeave = () => {
+    setHoveredTimeSlot(null);
+  };
+
+  const handleDrop = (e: React.DragEvent, newTimeSlot: string) => {
+    e.preventDefault();
+    setHoveredTimeSlot(null);
+
+    if (draggedAppointment && draggedAppointment.time !== newTimeSlot) {
+      setAppointments((prev) =>
+        prev.map((apt) =>
+          apt.id === draggedAppointment.id
+            ? { ...apt, time: newTimeSlot }
+            : apt,
+        ),
+      );
+      setTimeout(() => {
+        alert(
+          `📅 ${draggedAppointment.patient}'s appointment moved to ${newTimeSlot}!`,
+        );
+      }, 100);
+    }
+    setDraggedAppointment(null);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedAppointment(null);
+    setHoveredTimeSlot(null);
+  };
+
+  // New appointment functions
+  const openNewAppointmentModal = () => {
+    setNewAppointment({
+      ...newAppointment,
+      date: selectedDate.toISOString().split("T")[0],
+    });
+    setShowNewAppointmentModal(true);
+  };
+
+  const createAppointment = () => {
+    const newId = Math.max(...appointments.map((apt) => apt.id)) + 1;
+    const appointment: Appointment = {
+      id: newId,
+      time: newAppointment.time,
+      duration: newAppointment.duration,
+      patient: newAppointment.patientName,
+      type: newAppointment.appointmentType,
+      status: "scheduled",
+      room: newAppointment.room,
+    };
+
+    setAppointments((prev) => [...prev, appointment]);
+    setShowNewAppointmentModal(false);
+    setNewAppointment({
+      patientName: "",
+      patientPhone: "",
+      appointmentType: "consultation",
+      date: selectedDate.toISOString().split("T")[0],
+      time: "09:00",
+      duration: 30,
+      room: "Room 101",
+      notes: "",
+    });
+
+    setTimeout(() => {
+      alert(
+        `✅ Appointment scheduled for ${newAppointment.patientName} at ${newAppointment.time}!`,
+      );
+    }, 100);
+  };
+
+  const deleteAppointment = (appointmentId: number) => {
+    const appointment = appointments.find((apt) => apt.id === appointmentId);
+    if (
+      confirm(
+        `Are you sure you want to cancel ${appointment?.patient}'s appointment?`,
+      )
+    ) {
+      setAppointments((prev) => prev.filter((apt) => apt.id !== appointmentId));
+      setTimeout(() => {
+        alert(`❌ ${appointment?.patient}'s appointment has been cancelled.`);
+      }, 100);
+    }
+  };
+
+  // Quick actions
+  const blockTimeSlot = () => {
+    alert(
+      "🚫 Time blocking feature:\n\n1. Select time slots\n2. Mark as unavailable\n3. Add reason (lunch, meeting, etc.)\n\nFeature ready for implementation!",
+    );
+  };
+
+  const viewAvailability = () => {
+    const availableSlots = timeSlots.filter(
+      (slot) => !appointments.some((apt) => apt.time === slot),
+    ).length;
+    alert(
+      `📅 Availability Summary:\n\n✅ Available slots: ${availableSlots}\n📋 Booked slots: ${appointments.length}\n⏰ Next available: ${timeSlots.find((slot) => !appointments.some((apt) => apt.time === slot)) || "None today"}`,
+    );
+  };
+
+  const patientLookup = () => {
+    navigate("/check-in");
   };
 
   return (
