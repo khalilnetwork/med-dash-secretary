@@ -98,6 +98,20 @@ export const AppSidebar = () => {
     return false;
   };
 
+  const toggleSection = (title: string) => {
+    setOpenSections((prev) => ({
+      ...prev,
+      [title]: !prev[title],
+    }));
+  };
+
+  const isSectionOpen = (title: string) => {
+    return (
+      openSections[title] ??
+      isGroupActive(menuItems.find((item) => item.title === title))
+    );
+  };
+
   return (
     <Sidebar collapsible="icon" className={isCollapsed ? "w-16" : "w-64"}>
       <SidebarContent>
