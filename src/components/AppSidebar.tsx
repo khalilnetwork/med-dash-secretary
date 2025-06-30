@@ -1,6 +1,5 @@
-
-import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import React, { useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
   Calendar,
@@ -14,7 +13,9 @@ import {
   BarChart3,
   Settings,
   ChevronDown,
-} from 'lucide-react';
+  FileText,
+  User,
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -28,76 +29,94 @@ import {
   SidebarMenuSubItem,
   SidebarMenuSubButton,
   useSidebar,
-} from '@/components/ui/sidebar';
+} from "@/components/ui/sidebar";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from '@/components/ui/collapsible';
+} from "@/components/ui/collapsible";
 
 const menuItems = [
-  { 
-    title: 'Dashboard', 
-    url: '/', 
-    icon: LayoutDashboard 
+  {
+    title: "Dashboard",
+    url: "/",
+    icon: LayoutDashboard,
   },
   {
-    title: 'Appointments',
+    title: "Pre-Visit",
     icon: Calendar,
     subItems: [
-      { title: 'Calendar View', url: '/calendar', icon: Calendar },
-      { title: "Today's Agenda", url: '/agenda', icon: Clock },
+      { title: "Appointments", url: "/appointments", icon: Calendar },
+      {
+        title: "Patient Records",
+        url: "/patient-records",
+        icon: ClipboardList,
+      },
+      { title: "Medical History", url: "/medical-history", icon: FileText },
     ],
   },
   {
-    title: 'Check-In',
+    title: "Visit",
     icon: UserCheck,
     subItems: [
-      { title: 'Check-In Queue', url: '/check-in', icon: UserCheck },
-      { title: 'Intake Forms', url: '/intake', icon: ClipboardList },
+      { title: "Today's Schedule", url: "/schedule", icon: Clock },
+      { title: "Patient Queue", url: "/queue", icon: UserCheck },
+      { title: "Add New Patient", url: "/new-patient", icon: User },
     ],
   },
   {
-    title: 'Tasks & Queues',
+    title: "Post-Visit",
     icon: ListTodo,
     subItems: [
-      { title: 'Prescription Refills', url: '/refills', icon: Pill },
-      { title: 'Follow-Up Calls', url: '/callbacks', icon: Phone },
-      { title: 'Lab Alerts', url: '/lab-alerts', icon: AlertTriangle },
+      { title: "Follow-up Visits", url: "/follow-up", icon: Calendar },
+      { title: "Medication Reminders", url: "/medications", icon: Pill },
+      { title: "Health Reports", url: "/reports", icon: BarChart3 },
     ],
   },
-  { 
-    title: 'Reports', 
-    url: '/reports', 
-    icon: BarChart3 
-  },
-  { 
-    title: 'Settings', 
-    url: '/settings', 
-    icon: Settings 
+  {
+    title: "Settings",
+    url: "/settings",
+    icon: Settings,
   },
 ];
 
 export const AppSidebar = () => {
   const { state } = useSidebar();
   const location = useLocation();
-  const isCollapsed = state === 'collapsed';
+  const isCollapsed = state === "collapsed";
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
 
   const getNavClassName = ({ isActive }: { isActive: boolean }) =>
-    isActive 
-      ? 'bg-blue-100 text-blue-700 font-medium' 
-      : 'hover:bg-gray-100 text-gray-700';
+    isActive
+      ? "bg-sidebar-accent text-sidebar-primary font-medium"
+      : "hover:bg-sidebar-accent/50 text-sidebar-foreground";
 
   const isGroupActive = (item: any) => {
     if (item.url) return location.pathname === item.url;
     if (item.subItems) {
-      return item.subItems.some((subItem: any) => location.pathname === subItem.url);
+      return item.subItems.some(
+        (subItem: any) => location.pathname === subItem.url,
+      );
     }
     return false;
   };
 
+  const toggleSection = (title: string) => {
+    setOpenSections((prev) => ({
+      ...prev,
+      [title]: !prev[title],
+    }));
+  };
+
+  const isSectionOpen = (title: string) => {
+    return (
+      openSections[title] ??
+      isGroupActive(menuItems.find((item) => item.title === title))
+    );
+  };
+
   return (
-    <Sidebar collapsible="icon" className={isCollapsed ? 'w-16' : 'w-64'}>
+    <Sidebar collapsible="icon" className={isCollapsed ? "w-16" : "w-64"}>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
@@ -105,48 +124,70 @@ export const AppSidebar = () => {
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   {item.subItems ? (
-                    <Collapsible defaultOpen={isGroupActive(item)}>
+                    <Collapsible
+                      open={isSectionOpen(item.title)}
+                      onOpenChange={() => toggleSection(item.title)}
+                    >
                       <CollapsibleTrigger asChild>
-                        <SidebarMenuButton className="w-full justify-between">
+                        <SidebarMenuButton className="w-full justify-between hover:bg-sidebar-accent/70 transition-all duration-200">
                           <div className="flex items-center">
-                            <item.icon className="h-5 w-5" />
-                            {!isCollapsed && <span className="ml-2">{item.title}</span>}
+                            <item.icon className="h-5 w-5 transition-transform duration-200" />
+                            {!isCollapsed && (
+                              <span className="ml-2 transition-opacity duration-200">
+                                {item.title}
+                              </span>
+                            )}
                           </div>
                           {!isCollapsed && (
-                            <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
+                            <ChevronDown
+                              className={`h-4 w-4 transition-transform duration-300 ${
+                                isSectionOpen(item.title) ? "rotate-180" : ""
+                              }`}
+                            />
                           )}
                         </SidebarMenuButton>
                       </CollapsibleTrigger>
                       {!isCollapsed && (
-                        <CollapsibleContent>
+                        <CollapsibleContent className="transition-all duration-300 data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
                           <SidebarMenuSub>
-                            {item.subItems.map((subItem: any) => (
-                              <SidebarMenuSubItem key={subItem.title}>
-                                <SidebarMenuSubButton asChild>
-                                  <NavLink 
-                                    to={subItem.url} 
-                                    end 
-                                    className={getNavClassName}
-                                  >
-                                    <subItem.icon className="h-4 w-4" />
-                                    <span>{subItem.title}</span>
-                                  </NavLink>
-                                </SidebarMenuSubButton>
-                              </SidebarMenuSubItem>
-                            ))}
+                            {item.subItems.map(
+                              (subItem: any, index: number) => (
+                                <SidebarMenuSubItem key={subItem.title}>
+                                  <SidebarMenuSubButton asChild>
+                                    <NavLink
+                                      to={subItem.url}
+                                      end
+                                      className={`${getNavClassName} transition-all duration-200 hover:translate-x-1`}
+                                      style={{
+                                        animationDelay: `${index * 50}ms`,
+                                      }}
+                                    >
+                                      <subItem.icon className="h-4 w-4 transition-all duration-200" />
+                                      <span className="transition-all duration-200">
+                                        {subItem.title}
+                                      </span>
+                                    </NavLink>
+                                  </SidebarMenuSubButton>
+                                </SidebarMenuSubItem>
+                              ),
+                            )}
                           </SidebarMenuSub>
                         </CollapsibleContent>
                       )}
                     </Collapsible>
                   ) : (
                     <SidebarMenuButton asChild>
-                      <NavLink 
-                        to={item.url} 
-                        end 
-                        className={getNavClassName}
+                      <NavLink
+                        to={item.url}
+                        end
+                        className={`${getNavClassName} transition-all duration-200 hover:translate-x-1`}
                       >
-                        <item.icon className="h-5 w-5" />
-                        {!isCollapsed && <span>{item.title}</span>}
+                        <item.icon className="h-5 w-5 transition-transform duration-200" />
+                        {!isCollapsed && (
+                          <span className="transition-opacity duration-200">
+                            {item.title}
+                          </span>
+                        )}
                       </NavLink>
                     </SidebarMenuButton>
                   )}
