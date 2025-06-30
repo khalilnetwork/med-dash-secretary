@@ -30,26 +30,8 @@ const App = () => (
             <Route index element={<Dashboard />} />
             {/* Pre-Visit Routes */}
             <Route path="appointments" element={<CalendarView />} />
-            <Route
-              path="patient-records"
-              element={
-                <div className="p-8">
-                  <h1 className="text-2xl font-bold text-foreground">
-                    Patient Records - Building...
-                  </h1>
-                </div>
-              }
-            />
-            <Route
-              path="medical-history"
-              element={
-                <div className="p-8">
-                  <h1 className="text-2xl font-bold text-foreground">
-                    Medical History - Building...
-                  </h1>
-                </div>
-              }
-            />
+            <Route path="patient-records" element={<PatientRecords />} />
+            <Route path="medical-history" element={<MedicalHistory />} />
 
             {/* Visit Routes */}
             <Route path="schedule" element={<TodaysAgenda />} />
