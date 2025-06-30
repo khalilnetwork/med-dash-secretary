@@ -15,6 +15,19 @@ import {
 } from "lucide-react";
 
 export const Dashboard = () => {
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [lastUpdate, setLastUpdate] = useState(new Date());
+
+  // Simulate real-time updates
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRefreshKey((prev) => prev + 1);
+      setLastUpdate(new Date());
+    }, 30000); // Update every 30 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   const metrics = [
     {
       title: "Today's Appointments",
