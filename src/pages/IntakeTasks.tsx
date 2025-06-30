@@ -1,76 +1,94 @@
-
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Clock, User, FileText } from 'lucide-react';
+import React, { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Clock, User, FileText } from "lucide-react";
 
 export const IntakeTasks = () => {
   const [tasks, setTasks] = useState({
-    'not-started': [
+    "not-started": [
       {
         id: 1,
         patientName: "Sarah Johnson",
         dueTime: "9:00 AM",
         formType: "New Patient",
-        priority: "high"
+        priority: "high",
       },
       {
         id: 2,
         patientName: "Michael Chen",
         dueTime: "9:15 AM",
         formType: "Update Info",
-        priority: "medium"
-      }
+        priority: "medium",
+      },
     ],
-    'in-progress': [
+    "in-progress": [
       {
         id: 3,
         patientName: "Emily Davis",
         dueTime: "9:30 AM",
         formType: "New Patient",
-        priority: "high"
-      }
+        priority: "high",
+      },
     ],
-    'completed': [
+    completed: [
       {
         id: 4,
         patientName: "Robert Wilson",
         dueTime: "8:45 AM",
         formType: "Update Info",
-        priority: "low"
+        priority: "low",
       },
       {
         id: 5,
         patientName: "Lisa Brown",
         dueTime: "8:30 AM",
         formType: "New Patient",
-        priority: "medium"
-      }
-    ]
+        priority: "medium",
+      },
+    ],
   });
 
   const columns = [
-    { id: 'not-started', title: 'Not Started', count: tasks['not-started'].length },
-    { id: 'in-progress', title: 'In Progress', count: tasks['in-progress'].length },
-    { id: 'completed', title: 'Completed', count: tasks['completed'].length }
+    {
+      id: "not-started",
+      title: "Not Started",
+      count: tasks["not-started"].length,
+    },
+    {
+      id: "in-progress",
+      title: "In Progress",
+      count: tasks["in-progress"].length,
+    },
+    { id: "completed", title: "Completed", count: tasks["completed"].length },
   ];
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'high': return 'bg-red-100 text-red-800';
-      case 'medium': return 'bg-yellow-100 text-yellow-800';
-      case 'low': return 'bg-green-100 text-green-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case "high":
+        return "bg-red-100 text-red-800";
+      case "medium":
+        return "bg-yellow-100 text-yellow-800";
+      case "low":
+        return "bg-green-100 text-green-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
   };
 
   const getFormTypeIcon = (formType: string) => {
-    return formType === 'New Patient' ? User : FileText;
+    return formType === "New Patient" ? User : FileText;
   };
 
-  const handleDragStart = (e: React.DragEvent, taskId: number, sourceColumn: string) => {
-    e.dataTransfer.setData('text/plain', JSON.stringify({ taskId, sourceColumn }));
+  const handleDragStart = (
+    e: React.DragEvent,
+    taskId: number,
+    sourceColumn: string,
+  ) => {
+    e.dataTransfer.setData(
+      "text/plain",
+      JSON.stringify({ taskId, sourceColumn }),
+    );
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -79,19 +97,23 @@ export const IntakeTasks = () => {
 
   const handleDrop = (e: React.DragEvent, targetColumn: string) => {
     e.preventDefault();
-    const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+    const data = JSON.parse(e.dataTransfer.getData("text/plain"));
     const { taskId, sourceColumn } = data;
 
     if (sourceColumn === targetColumn) return;
 
-    setTasks(prev => {
-      const task = prev[sourceColumn as keyof typeof prev].find(t => t.id === taskId);
+    setTasks((prev) => {
+      const task = prev[sourceColumn as keyof typeof prev].find(
+        (t) => t.id === taskId,
+      );
       if (!task) return prev;
 
       return {
         ...prev,
-        [sourceColumn]: prev[sourceColumn as keyof typeof prev].filter(t => t.id !== taskId),
-        [targetColumn]: [...prev[targetColumn as keyof typeof prev], task]
+        [sourceColumn]: prev[sourceColumn as keyof typeof prev].filter(
+          (t) => t.id !== taskId,
+        ),
+        [targetColumn]: [...prev[targetColumn as keyof typeof prev], task],
       };
     });
   };
@@ -129,7 +151,7 @@ export const IntakeTasks = () => {
                 </CardTitle>
               </CardHeader>
             </Card>
-            
+
             <div
               className="space-y-3 min-h-[400px] p-2 bg-gray-50 rounded-lg"
               onDragOver={handleDragOver}
@@ -147,27 +169,42 @@ export const IntakeTasks = () => {
                     <CardContent className="p-4">
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
-                          <h3 className="font-medium text-gray-900">{task.patientName}</h3>
+                          <h3 className="font-medium text-gray-900">
+                            {task.patientName}
+                          </h3>
                           <Badge className={getPriorityColor(task.priority)}>
                             {task.priority}
                           </Badge>
                         </div>
-                        
+
                         <div className="flex items-center gap-2 text-sm text-gray-600">
                           <Clock className="h-4 w-4" />
                           <span>Due: {task.dueTime}</span>
                         </div>
-                        
+
                         <div className="flex items-center gap-2 text-sm text-gray-600">
                           <IconComponent className="h-4 w-4" />
                           <span>{task.formType}</span>
                         </div>
-                        
+
                         <div className="flex gap-2 pt-2">
-                          <Button size="sm" variant="outline" className="flex-1">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="flex-1"
+                            onClick={() =>
+                              alert(`Viewing form for ${task.patientName}`)
+                            }
+                          >
                             View
                           </Button>
-                          <Button size="sm" className="flex-1">
+                          <Button
+                            size="sm"
+                            className="flex-1"
+                            onClick={() =>
+                              alert(`Editing form for ${task.patientName}`)
+                            }
+                          >
                             Edit
                           </Button>
                         </div>
