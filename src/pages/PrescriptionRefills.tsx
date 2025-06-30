@@ -258,12 +258,14 @@ export const PrescriptionRefills = () => {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Total Requests</p>
+                <p className="text-sm text-muted-foreground">
+                  Today's Patients
+                </p>
                 <p className="text-2xl font-bold text-foreground">
                   {stats.total}
                 </p>
               </div>
-              <Pill className="h-8 w-8 text-primary" />
+              <User className="h-8 w-8 text-primary" />
             </div>
           </CardContent>
         </Card>
@@ -272,12 +274,14 @@ export const PrescriptionRefills = () => {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Pending Review</p>
-                <p className="text-2xl font-bold text-yellow-600">
-                  {stats.pending}
+                <p className="text-sm text-muted-foreground">
+                  With Medications
+                </p>
+                <p className="text-2xl font-bold text-blue-600">
+                  {stats.withMedications}
                 </p>
               </div>
-              <Clock className="h-8 w-8 text-yellow-600" />
+              <Pill className="h-8 w-8 text-blue-600" />
             </div>
           </CardContent>
         </Card>
@@ -286,9 +290,11 @@ export const PrescriptionRefills = () => {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Approved Today</p>
+                <p className="text-sm text-muted-foreground">
+                  Reminders Active
+                </p>
                 <p className="text-2xl font-bold text-green-600">
-                  {stats.approved}
+                  {stats.remindersEnabled}
                 </p>
               </div>
               <CheckCircle className="h-8 w-8 text-green-600" />
@@ -300,12 +306,12 @@ export const PrescriptionRefills = () => {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Urgent</p>
-                <p className="text-2xl font-bold text-red-600">
-                  {stats.urgent}
+                <p className="text-sm text-muted-foreground">Needs Setup</p>
+                <p className="text-2xl font-bold text-yellow-600">
+                  {stats.needsSetup}
                 </p>
               </div>
-              <AlertTriangle className="h-8 w-8 text-red-600" />
+              <AlertTriangle className="h-8 w-8 text-yellow-600" />
             </div>
           </CardContent>
         </Card>
